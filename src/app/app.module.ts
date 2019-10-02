@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { AboutComponent } from './comp/about/about.component';
 import { HeaderComponent } from './comp/header/header.component';
 import { FooterComponent } from './comp/footer/footer.component';
+import {NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 
 @NgModule({
@@ -17,12 +18,13 @@ import { FooterComponent } from './comp/footer/footer.component';
     AboutComponent,
     HeaderComponent,
     FooterComponent
-  ],
+  ], 
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgbModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
