@@ -8,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   logo = "../../assets/images/logo.png";
+  isCollapsed: boolean;
 
-  constructor() { }
+  constructor() {
+    this.isCollapsed = true;
+   }
 
   ngOnInit() {
   }
