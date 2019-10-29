@@ -7,12 +7,9 @@ import { Activity } from '../activities/activity';
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
-
   @Input() activity: Activity;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -10,12 +10,11 @@ import { Activity } from './activity';
 export class ActivitiesComponent implements OnInit {
   activities: Activity[];
 
-  constructor(private fireService: SYGDatabaseService) { }
+  constructor(private fireService: SYGDatabaseService) {}
 
   ngOnInit() {
     this.fireService.GetActivities().subscribe(result => {
       this.activities = result;
     });
   }
-
 }
