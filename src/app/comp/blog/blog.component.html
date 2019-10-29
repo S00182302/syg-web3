@@ -1,1 +1,29 @@
-<p>blog works!</p>
+<div class="d-flex justify-content-center">
+  <div>
+    <div *ngFor="let item of items; let i = index">
+      <div class="card">
+        <img
+          class="card-img-top"
+          src="{{ item.payload.doc.data().FeaturedImage }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.payload.doc.data().Title }}</h5>
+          <p>
+            <button
+              type="button"
+              class="btn btn-dark"
+              (click)="isCollapsed[i] = !isCollapsed[i]"
+            >
+              Read More
+            </button>
+          </p>
+          <div [ngbCollapse]="!isCollapsed[i]">
+            <p class="card-text">
+              {{ item.payload.doc.data().Content }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

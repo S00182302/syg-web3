@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
 
 @Component({
   selector: 'app-blog',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
+  public isCollapsed: boolean[] = [];
+  items: any;
 
-  constructor() { }
+  constructor(private fireBaseService: SYGDatabaseService) {}
 
   ngOnInit() {
+    this.fireBaseService.ReadBlogs().subscribe(result => {
+      this.items = result;
+    });
   }
-
 }
