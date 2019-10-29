@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { AboutComponent } from './comp/about/about.component';
 import { HeaderComponent } from './comp/header/header.component';
 import { FooterComponent } from './comp/footer/footer.component';
-import {NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivitiesComponent } from './comp/activities/activities.component';
 import { BlogComponent } from './comp/blog/blog.component';
 import { ActivityCalendarComponent } from './comp/activity-calendar/activity-calendar.component';

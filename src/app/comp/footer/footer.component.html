@@ -1,1 +1,18 @@
-<p>footer works!</p>
+<footer>
+    <div class="footer-address">
+        <p>Sligo Youth Group<br />
+        1 Somewhere Street<br />
+        Sligo<br />
+        Tel: 012 345 6789</p>
+    </div>
+    <div class="social-icons">
+        <span *ngFor="let item of socialItems">
+            <a [href]="item.link">
+                <img [src]="item.image" alt="item.alt" />
+            </a>
+        </span>
+    </div>
+    <div class="footer-copyright">
+        <p>&#169; Sligo Youth Group 2019</p>
+    </div>
+</footer>
