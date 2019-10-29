@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
+import { Activity } from './activity';
 
 @Component({
   selector: 'app-activities',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activities.component.css']
 })
 export class ActivitiesComponent implements OnInit {
+  activities: Activity[];
 
-  constructor() { }
+  constructor(private fireService: SYGDatabaseService) { }
 
   ngOnInit() {
+    this.fireService.GetActivities().subscribe(result => {
+      this.activities = result;
+    });
   }
 
 }

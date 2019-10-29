@@ -1,1 +1,6 @@
-<p>activities works!</p>
+<div class="activities main">
+    <h1>Activities</h1>
+    <div *ngFor="let activity of activities">
+        <app-activity [activity]="activity"></app-activity>
+    </div>
+</div>
