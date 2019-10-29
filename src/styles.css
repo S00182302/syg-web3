@@ -82,3 +82,14 @@ footer {
     padding: 20px;
     text-align: justify;
 }
+
+/* project calendar */
+.projects h1 {
+    display: inline-block;
+    padding: 10px;
+    margin: 0;
+}
+.projects .content {
+    padding: 20px;
+    text-align: justify;
+}
