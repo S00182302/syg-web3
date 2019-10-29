@@ -23,7 +23,8 @@ import { LoginComponent } from './comp/login/login.component';
 import { ProjectsComponent } from './comp/projects/projects.component';
 import { DetailsComponent } from './comp/details/details.component';
 import { ContactComponent } from './comp/contact/contact.component';
-import { CreateBlogComponent } from './comp/create-blog/create-blog.component'
+import { CreateBlogComponent } from './comp/create-blog/create-blog.component';
+import { ActivityComponent } from './comp/activity/activity.component'
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CreateBlogComponent } from './comp/create-blog/create-blog.component'
     ProjectsComponent,
     DetailsComponent,
     ContactComponent,
-    CreateBlogComponent
+    CreateBlogComponent,
+    ActivityComponent
   ], 
   imports: [
     BrowserModule,
