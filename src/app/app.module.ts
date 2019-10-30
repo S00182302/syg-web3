@@ -24,8 +24,9 @@ import { ProjectsComponent } from './comp/projects/projects.component';
 import { DetailsComponent } from './comp/details/details.component';
 import { ContactComponent } from './comp/contact/contact.component';
 import { CreateBlogComponent } from './comp/create-blog/create-blog.component';
-import { ActivityComponent } from './comp/activity/activity.component'
-
+import { ActivityComponent } from './comp/activity/activity.component';
+import { FormsModule } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -48,15 +49,16 @@ import { ActivityComponent } from './comp/activity/activity.component'
     ContactComponent,
     CreateBlogComponent,
     ActivityComponent
-  ], 
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    NgbModule 
+    NgbModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [AngularFireAuth],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

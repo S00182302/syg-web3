@@ -9,22 +9,34 @@ import { ContactComponent } from './comp/contact/contact.component';
 import { LoginComponent } from './comp/login/login.component';
 import { JoinComponent } from './comp/join/join.component';
 import { ProjectsComponent } from './comp/projects/projects.component';
-
+import { AuthGuard } from './auth-gaurd.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent },
-  {path: 'activities', component: ActivitiesComponent },
-  {path: 'blog', component: BlogComponent },
-  {path: 'volunteers', component: VolunteersComponent },
-  {path: 'about', component: AboutComponent },
-  {path: 'contact', component: ContactComponent },
-  {path: 'login', component: LoginComponent },
-  {path: 'join', component: JoinComponent },
-  {path: 'projectCalendar', component: ProjectsComponent}
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'activities',
+    component: ActivitiesComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'blog', component: BlogComponent, canActivate: [AuthGuard] },
+  {
+    path: 'volunteers',
+    component: VolunteersComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'join', component: JoinComponent },
+  {
+    path: 'projectCalendar',
+    component: ProjectsComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

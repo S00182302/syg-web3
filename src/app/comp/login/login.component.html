@@ -1,1 +1,52 @@
-<p>login works!</p>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Login</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <label>Email</label>
+                <input
+                  class="form-control"
+                  name="emailInput"
+                  placeholder="Email"
+                  required
+                  [(ngModel)]="emailInput"
+                  autofocus
+                />
+              </div>
+              <br />
+              <label>Password</label>
+              <div class="form-label-group">
+                <input
+                  type="password"
+                  name="inputPassword"
+                  class="form-control"
+                  placeholder="Password"
+                  [(ngModel)]="passwordInput"
+                  required
+                />
+              </div>
+              <br />
+              <button
+                class="btn btn-primary btn-block text-uppercase"
+                (click)="Login()"
+              >
+                Login
+              </button>
+              <br />
+              <button
+                class="btn btn-primary btn-block text-uppercase"
+                (click)="router.navigate(['join'])"
+              >
+                Join
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

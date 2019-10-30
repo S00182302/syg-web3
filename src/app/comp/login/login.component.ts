@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -6,10 +8,58 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  responseMessage: string = '';
+  responseMessageType: string = '';
+  emailInput: string;
+  passwordInput: string;
+  isForgotPassword: boolean;
+  userDetails: any;
 
-  constructor() { }
+  constructor(private authService: AuthService, public router: Router) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  //Login user with  provided Email/ Password
+  Login() {
+    this.responseMessage = '';
+    this.authService.login(this.emailInput, this.passwordInput).then(
+      res => {
+        console.log(res);
+        this.ShowMessage('success', 'Successfully Logged In!');
+        this.IsUserLoggedIn();
+        this.router.navigate(['blog']);
+      },
+      err => {
+        this.ShowMessage('danger', err.message);
+      }
+    );
   }
 
+  //Check localStorage is having User Data
+  IsUserLoggedIn() {
+    this.userDetails = this.authService.isLoggedIn();
+  }
+
+  //Common Method to Show Message and Hide after 2 seconds
+  ShowMessage(type, msg) {
+    this.responseMessageType = type;
+    this.responseMessage = msg;
+    setTimeout(() => {
+      this.responseMessage = '';
+    }, 2000);
+  }
+
+  // Send link on given email to reset password
+  ForgotPassword() {
+    this.authService.sendPasswordResetEmail(this.emailInput).then(
+      res => {
+        console.log(res);
+        this.isForgotPassword = false;
+        this.ShowMessage('success', 'Please Check Your Email');
+      },
+      err => {
+        this.ShowMessage('danger', err.message);
+      }
+    );
+  }
 }
