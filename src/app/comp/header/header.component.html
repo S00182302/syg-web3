@@ -1,34 +1,81 @@
 <nav class="navbar navbar-inverse navbar-toggleable-md fixed-top bg-faded">
-    <img class="main-logo" [src]="logo" alt="logo">
-    <button class ="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
-        <span class="hamburger"></span>
-    </button>
-    <div class="small-menu" [ngbCollapse]="isCollapsed">
-        <ul class="navbar-nav">
-            <li ngbLink-item class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed" routerLink="" routerLinkActive="active">HOME <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed" routerLink="/activities" routerLinkActive="active">ACTIVITIES</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed"  routerLink="/blog" routerLinkActive="active">BLOG/NEWS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed"  routerLink="/volunteers" routerLinkActive="active">VOLUNTEERS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed"  routerLink="/about" routerLinkActive="active">ABOUT</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed"  routerLink="/contact" routerLinkActive="active">CONTACT</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="isCollapsed = !isCollapsed"  routerLink="/projectCalendar" routerLinkActive="active">PROJECT CALENDAR</a>
-            </li>
-        </ul>
-
-    </div>
+  <img class="main-logo" [src]="logo" alt="logo" />
+  <button
+    class="navbar-toggler"
+    type="button"
+    (click)="isCollapsed = !isCollapsed"
+  >
+    <span class="hamburger"></span>
+  </button>
+  <div class="small-menu" [ngbCollapse]="isCollapsed">
+    <ul class="navbar-nav">
+      <li ngbLink-item class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink=""
+          routerLinkActive="active"
+          >HOME <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/activities"
+          routerLinkActive="active"
+          >ACTIVITIES</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/blog"
+          routerLinkActive="active"
+          >BLOG/NEWS</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/volunteers"
+          routerLinkActive="active"
+          >VOLUNTEERS</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/about"
+          routerLinkActive="active"
+          >ABOUT</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/contact"
+          routerLinkActive="active"
+          >CONTACT</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/projectCalendar"
+          routerLinkActive="active"
+          >PROJECT CALENDAR</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 <div class="nav-spacer"></div>
-
