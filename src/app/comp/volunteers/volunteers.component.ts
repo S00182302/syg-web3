@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./volunteers.component.css']
 })
 export class VolunteersComponent implements OnInit {
+ volunteers1: string = "assets/images/carousel/volunteers1.jpg"
 
   constructor() { }
 
