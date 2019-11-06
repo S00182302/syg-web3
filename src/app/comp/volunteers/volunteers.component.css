@@ -1,0 +1,24 @@
+.c-wrapper{
+    width: 95%;
+    margin: auto;
+}
+ngb-carousel img{
+    margin: 0 auto;  /*important */
+    max-width: none;  /*important */
+    min-width: 100%;
+}
+
+.btn-primary{
+    margin:20px;
+}
+#card1{
+ 
+    float: left;
+}
+#card2{
+    padding: 20px;
+   float: left;
+}
+.clearfix{
+    clear:both
+}
