@@ -12,6 +12,7 @@ export class AboutComponent implements OnInit {
   sizeB:any;
   sizeA: any;
   sizeC: any;
+  
   ngOnInit() {
     let countC = this.fireBaseService.GetVolunteers().subscribe(c => {
       return this.sizeC= c.length;

@@ -27,6 +27,7 @@ import { CreateBlogComponent } from './comp/create-blog/create-blog.component';
 import { ActivityComponent } from './comp/activity/activity.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CountUpModule } from 'countup.js-angular2';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
     AngularFirestoreModule,
     NgbModule,
     FormsModule,
+    CountUpModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

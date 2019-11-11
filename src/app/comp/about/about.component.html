@@ -12,11 +12,11 @@
     <div class="counting-sec">
         <div >
             <div class="col">
-                <div class="num">{{this.sizeB}}</div>
+                <div [countUp]="sizeB" class="num">0</div>
                 Blogs
             </div>
             <div class="col" >
-                <div class="num">{{this.sizeA}}</div>
+                <div [countUp]="sizeA" class="num">0</div>
                 Activities
             </div>
 
@@ -26,7 +26,7 @@
             </div>
 
             <div class="col">
-                <div class="num">{{this.sizeC}}</div>
+                <div [countUp]="sizeC" class="num">0</div>
                 Volunteers
             </div>
 
