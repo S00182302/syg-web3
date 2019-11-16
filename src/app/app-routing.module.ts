@@ -10,6 +10,7 @@ import { LoginComponent } from './comp/login/login.component';
 import { JoinComponent } from './comp/join/join.component';
 import { ProjectsComponent } from './comp/projects/projects.component';
 import { AuthGuard } from './auth-gaurd.guard';
+import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -32,7 +33,8 @@ const routes: Routes = [
     path: 'projectCalendar',
     component: ProjectsComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'forgotpassword', component: ForgotPasswordComponent }
 ];
 
 @NgModule({

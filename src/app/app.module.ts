@@ -28,6 +28,7 @@ import { ActivityComponent } from './comp/activity/activity.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CountUpModule } from 'countup.js-angular2';
+import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { CountUpModule } from 'countup.js-angular2';
     DetailsComponent,
     ContactComponent,
     CreateBlogComponent,
-    ActivityComponent
+    ActivityComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
