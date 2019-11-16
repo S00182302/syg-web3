@@ -16,5 +16,7 @@ export class ActivitiesComponent implements OnInit {
     this.fireService.GetActivities().subscribe(result => {
       this.activities = result;
     });
+
+
   }
 }

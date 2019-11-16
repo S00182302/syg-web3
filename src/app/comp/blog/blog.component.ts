@@ -10,11 +10,14 @@ export class BlogComponent implements OnInit {
   public isCollapsed: boolean[] = [];
   items: any;
 
+
   constructor(private fireBaseService: SYGDatabaseService) {}
 
   ngOnInit() {
     this.fireBaseService.ReadBlogs().subscribe(result => {
       this.items = result;
     });
+
+  
   }
 }
