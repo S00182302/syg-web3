@@ -9,6 +9,7 @@ import { ContactComponent } from './comp/contact/contact.component';
 import { LoginComponent } from './comp/login/login.component';
 import { JoinComponent } from './comp/join/join.component';
 import { ProjectsComponent } from './comp/projects/projects.component';
+import { ActivityCalendarComponent } from './comp/activity-calendar/activity-calendar.component';
 import { AuthGuard } from './auth-gaurd.guard';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: 'projectCalendar',
     component: ProjectsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'activityCalendar',
+    component: ActivityCalendarComponent,
     canActivate: [AuthGuard]
   },
   { path: 'forgotpassword', component: ForgotPasswordComponent }
