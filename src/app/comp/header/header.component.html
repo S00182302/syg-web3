@@ -73,6 +73,15 @@
         >
       </li>
       <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/activityCalendar"
+          routerLinkActive="active"
+          >ACTIVITY CALENDAR</a
+        >
+      </li>
+      <li class="nav-item">
         <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
       </li>
     </ul>
