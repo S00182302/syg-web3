@@ -9,15 +9,16 @@ import { ContactComponent } from './comp/contact/contact.component';
 import { LoginComponent } from './comp/login/login.component';
 import { JoinComponent } from './comp/join/join.component';
 import { ProjectsComponent } from './comp/projects/projects.component';
+import { ActivityCalendarComponent } from './comp/activity-calendar/activity-calendar.component';
 import { AuthGuard } from './auth-gaurd.guard';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'home', component: HomeComponent },
   {
     path: 'activities',
-    component: ActivitiesComponent,
-    canActivate: [AuthGuard]
+    component: ActivitiesComponent
   },
   { path: 'blog', component: BlogComponent, canActivate: [AuthGuard] },
   {
@@ -25,8 +26,8 @@ const routes: Routes = [
     component: VolunteersComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'join', component: JoinComponent },
   {
@@ -34,7 +35,14 @@ const routes: Routes = [
     component: ProjectsComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'forgotpassword', component: ForgotPasswordComponent }
+  {
+    path: 'activityCalendar',
+    component: ActivityCalendarComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
+  //TODO
+  /*{ path: '**',  component: PageNotFoundComponent } */
 ];
 
 @NgModule({
