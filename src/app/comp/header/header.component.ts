@@ -1,6 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,15 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {
     this.isCollapsed = true;
+
+    // check if being redirected to home from login
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd)  
+    ).subscribe((event: NavigationEnd) => {
+      if(event.url == "/home"){
+        this.loginCheck();
+      }
+    });
   }
 
   ngOnInit() {
@@ -31,6 +41,7 @@ export class HeaderComponent implements OnInit {
         this.userDetails = undefined;
         localStorage.removeItem('user');
         this.router.navigate(['login']);
+        this.isLoggedIn = false;
       },
       err => {
         this.ShowMessage('danger', err.message);
