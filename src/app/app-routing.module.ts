@@ -14,11 +14,11 @@ import { AuthGuard } from './auth-gaurd.guard';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: 'activities',
-    component: ActivitiesComponent,
-    canActivate: [AuthGuard]
+    component: ActivitiesComponent
   },
   { path: 'blog', component: BlogComponent, canActivate: [AuthGuard] },
   {
