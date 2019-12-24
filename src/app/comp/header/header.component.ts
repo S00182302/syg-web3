@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 
@@ -13,12 +13,15 @@ export class HeaderComponent implements OnInit {
   userDetails: any;
   responseMessage: string = '';
   responseMessageType: string = '';
+  isLoggedIn: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.isCollapsed = true;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loginCheck();
+  }
 
   //SignOut Firebase Session and Clean LocalStorage
   LogoutUser() {
@@ -43,4 +46,20 @@ export class HeaderComponent implements OnInit {
       this.responseMessage = '';
     }, 2000);
   }
+
+  //Checks if User Is Logged in
+  IsUserLoggedIn() {
+    return (this.userDetails = this.authService.isLoggedIn());
+  }
+
+  // Funtion to check if user is logged in Asynchronously
+  async loginCheck() {
+    const user = await this.IsUserLoggedIn();
+    if (user) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
+  
 }

@@ -22,3 +22,9 @@ ngb-carousel img{
 .clearfix{
     clear:both
 }
+button{
+    width: initial;
+    font-size: 1.4em;
+    border-radius: 10px;
+    padding: 5px 60px;
+}

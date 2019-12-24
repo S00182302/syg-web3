@@ -1,0 +1,14 @@
+footer {
+    margin-top: 20px;
+    background-color: #505050;
+    text-align: center;
+    color: #fff;
+}
+.footer-address,
+.footer-copyright {
+    padding: 10px;
+}
+.social-icons img{
+    max-width: 100px;
+    margin: 2.5%;
+}

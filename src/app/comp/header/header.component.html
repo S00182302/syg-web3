@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-toggleable-md fixed-top bg-faded">
+<nav class="navbar navbar-inverse navbar-toggleable-md fixed-top bg-faded hidden">
   <img class="main-logo" [src]="logo" alt="logo" />
   <button
     class="navbar-toggler"
@@ -64,6 +64,90 @@
         >
       </li>
       <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/projectCalendar"
+          routerLinkActive="active"
+          >PROJECT CALENDAR</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/activityCalendar"
+          routerLinkActive="active"
+          >ACTIVITY CALENDAR</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<nav>
+  <!-- Large menu -->
+  <img class="main-logo" [src]="logo" alt="logo" />
+  <div class="large-menu">
+    <ul class="navbar-nav">
+      <li ngbLink-item class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="home"
+          routerLinkActive="active"
+          >HOME <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/activities"
+          routerLinkActive="active"
+          >ACTIVITIES</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/blog"
+          routerLinkActive="active"
+          >BLOG/NEWS</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/volunteers"
+          routerLinkActive="active"
+          >VOLUNTEERS</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/about"
+          routerLinkActive="active"
+          >ABOUT</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="isCollapsed = !isCollapsed"
+          routerLink="/contact"
+          routerLinkActive="active"
+          >CONTACT</a
+        >
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
