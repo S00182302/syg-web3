@@ -14,7 +14,7 @@ import { AuthGuard } from './auth-gaurd.guard';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   {
     path: 'activities',
@@ -26,8 +26,8 @@ const routes: Routes = [
     component: VolunteersComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'join', component: JoinComponent },
   {
@@ -40,7 +40,9 @@ const routes: Routes = [
     component: ActivityCalendarComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'forgotpassword', component: ForgotPasswordComponent }
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
+  //TODO
+  /*{ path: '**',  component: PageNotFoundComponent } */
 ];
 
 @NgModule({

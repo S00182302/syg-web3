@@ -91,6 +91,9 @@
 <nav>
   <!-- Large menu -->
   <img class="main-logo" [src]="logo" alt="logo" />
+  <div *ngIf="isLoggedIn; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock><a class="login-menu" (click)="LogoutUser()">LOGOUT</a></ng-template>
+      <ng-template #elseBlock><a class="login-menu" routerLink="/login">LOGIN</a></ng-template>
   <div class="large-menu">
     <ul class="navbar-nav">
       <li ngbLink-item class="nav-item">
@@ -156,7 +159,7 @@
           >PROJECT CALENDAR</a
         >
       </li>
-      <li class="nav-item">
+      <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
@@ -164,9 +167,6 @@
           routerLinkActive="active"
           >ACTIVITY CALENDAR</a
         >
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
       </li>
     </ul>
   </div>

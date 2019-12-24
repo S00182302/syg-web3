@@ -79,6 +79,14 @@ nav {
 .large-menu ul li .active:link{
     color: #fff;
 }
+.login-menu {
+    float: right;
+    margin-top: 40px;
+    margin-right: 40px;
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+}
 
 @media screen and (min-width: 769px) {
     .main-logo {
