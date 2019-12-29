@@ -31,10 +31,14 @@ import { CountUpModule } from 'countup.js-angular2';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,12 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    BrowserAnimationsModule,
+    FullCalendarModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

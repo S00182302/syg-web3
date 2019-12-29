@@ -5,7 +5,6 @@ import {
   ViewChild,
   TemplateRef
 } from '@angular/core';
-
 import { AuthService } from '../../service/auth.service';
 import {
   startOfDay,
@@ -126,9 +125,12 @@ export class ActivityCalendarComponent implements OnInit {
   ];
 
   activeDayIsOpen: boolean = true;
-
+  
 
   constructor(private auth: AuthService, private modal: NgbModal) { }
+
+  ngOnInit() {
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -194,9 +196,6 @@ export class ActivityCalendarComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
-  }
-
-  ngOnInit() {
   }
 
 }

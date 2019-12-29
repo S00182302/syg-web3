@@ -1,5 +1,6 @@
 <main>
     <p>Welcome to the Activities Calendar</p>
+
     <div class="row text-center">
         <div class="col-md-4">
           <div class="btn-group">
@@ -53,7 +54,7 @@
               class="btn btn-primary"
               (click)="setView(CalendarView.Day)"
               [class.active]="view === CalendarView.Day"
-            > 
+            >
               Day
             </div>
           </div>
@@ -181,6 +182,7 @@
         </table>
       </div>
       
+      
       <ng-template #modalContent let-close="close">
         <div class="modal-header">
           <h5 class="modal-title">Event action occurred</h5>
@@ -205,4 +207,6 @@
         </div>
       </ng-template>
       
+
+
 </main>
