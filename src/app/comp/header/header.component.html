@@ -63,7 +63,7 @@
           >CONTACT</a
         >
       </li>
-      <li class="nav-item">
+      <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
@@ -72,7 +72,7 @@
           >PROJECT CALENDAR</a
         >
       </li>
-      <li class="nav-item">
+      <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"

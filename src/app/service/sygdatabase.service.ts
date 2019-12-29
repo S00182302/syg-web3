@@ -1,8 +1,8 @@
 import { Volunteer } from './../comp/volunteers/volunteer';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Activity } from '../comp/activities/activity';
 import { Blog } from '../comp/blog/blog';
 
@@ -58,5 +58,24 @@ export class SYGDatabaseService {
           });
         })
       );
+  }
+
+  getProjectData():Observable<any[]> {
+    let data = [
+      { title: 'Brett Event', start: '2019-12-01' },
+      { title: 'event 2', date: '2019-12-02' }
+    ];
+
+    return this.firestore.collection('ProjectCalendar')
+    .valueChanges()
+    .pipe(
+      tap( events => console.log(events)),
+      map( events => events.map(event => {
+        let data:any = event;
+        data.start = data.start.toDate();
+        data.end = data.end.toDate();
+        return data;
+      }))
+    );
   }
 }
