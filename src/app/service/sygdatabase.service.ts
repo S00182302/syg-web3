@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Activity } from '../comp/activities/activity';
 import { Blog } from '../comp/blog/blog';
+import { ProjectCalendar } from '../models/projectCalendar';
 
 @Injectable({
   providedIn: 'root'
@@ -60,22 +61,50 @@ export class SYGDatabaseService {
       );
   }
 
-  getProjectData():Observable<any[]> {
-    let data = [
-      { title: 'Brett Event', start: '2019-12-01' },
-      { title: 'event 2', date: '2019-12-02' }
-    ];
+  /*
+  GetVolunteer(id: string){
+    return this.firestore
+      .collection('Volunteer')
+      .doc(id);
+  }
+  */
 
+  getProjectData():Observable<ProjectCalendar[]> {
     return this.firestore.collection('ProjectCalendar')
-    .valueChanges()
+    .snapshotChanges()
     .pipe(
-      tap( events => console.log(events)),
-      map( events => events.map(event => {
-        let data:any = event;
-        data.start = data.start.toDate();
-        data.end = data.end.toDate();
-        return data;
-      }))
+      map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as ProjectCalendar;
+          const id = a.payload.doc.id;
+
+          const dateData = a.payload.doc.data()  as any;
+          const sDate = dateData.start.toDate();
+          const eDate = dateData.end.toDate();
+          data.start = sDate;
+          data.end = eDate;
+
+          return { id, ...data };
+        });
+      })
     );
+  }
+
+  createNewProjectEvent(projectEvent: ProjectCalendar): void{
+    this.firestore.collection('ProjectCalendar').add(projectEvent);
+  }
+
+  updateProjectEvent(event: ProjectCalendar){
+    this.firestore.collection('ProjectCalendar').doc(event.id.toString()).update({
+      allDay: event.allDay,
+      start: event.start,
+      end: event.end,
+      title: event.title,
+      description: event.description,
+      extendendProps: {
+        leadVolunteer: event.extendendProps.leadVolunteer,
+        specialNotes: event.extendendProps.specialNotes
+      }
+    });
   }
 }

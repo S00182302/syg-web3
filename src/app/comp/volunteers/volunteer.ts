@@ -1,4 +1,5 @@
 export interface Volunteer {
+    id: string;
     Name?: string;
     Hobbys?: string;
     Description?: string;
