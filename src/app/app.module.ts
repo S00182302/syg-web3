@@ -25,7 +25,7 @@ import { DetailsComponent } from './comp/details/details.component';
 import { ContactComponent } from './comp/contact/contact.component';
 import { CreateBlogComponent } from './comp/create-blog/create-blog.component';
 import { ActivityComponent } from './comp/activity/activity.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CountUpModule } from 'countup.js-angular2';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
@@ -70,6 +70,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     AngularFirestoreModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
