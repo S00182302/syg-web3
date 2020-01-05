@@ -25,16 +25,20 @@ import { DetailsComponent } from './comp/details/details.component';
 import { ContactComponent } from './comp/contact/contact.component';
 import { CreateBlogComponent } from './comp/create-blog/create-blog.component';
 import { ActivityComponent } from './comp/activity/activity.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CountUpModule } from 'countup.js-angular2';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
 
 
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -66,10 +70,16 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFirestoreModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    BrowserAnimationsModule,
+    FullCalendarModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]
