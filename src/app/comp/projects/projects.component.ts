@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Calendar, OptionsInput } from '@fullcalendar/core';
+import { OptionsInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
@@ -41,14 +41,16 @@ export class ProjectsComponent implements OnInit {
   volunteers: Volunteer[];
 
   constructor(private svc: SYGDatabaseService, private modalService: NgbModal) {
-    
   }
 
   options: OptionsInput;
   eventsModel: any;
   @ViewChild('fullcalendar', {static: false}) fullcalendar: FullCalendarComponent;
+  
 
   ngOnInit() {
+    
+
     this.svc.getProjectData().subscribe(data => this.calendarEvents = data);
     this.svc.GetVolunteers().subscribe(result => {
       this.volunteers = result;
@@ -65,9 +67,9 @@ export class ProjectsComponent implements OnInit {
         }
       },
       header: {
-        left: 'dayGridMonth, dayGridWeek, dayGridDay',
+        left: 'dayGridMonth, dayGridWeek',
         center: 'title',
-        right: 'today, prev, next, myCustomButton'
+        right: 'today, prev, next'
       },
       plugins: [dayGridPlugin, interactionPlugin]
     };
@@ -134,7 +136,7 @@ export class ProjectsComponent implements OnInit {
   eventDrop(model) {
     let newCalendarEvent: ProjectCalendar;
     let start = model.event.start;
-    let end = model.event.end;
+    let end = (model.event.end == null) ? model.event.start : model.event.end;
 
     newCalendarEvent = {
       id: model.event.id,
