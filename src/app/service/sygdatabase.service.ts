@@ -6,6 +6,8 @@ import { map, tap } from 'rxjs/operators';
 import { Activity } from '../comp/activities/activity';
 import { Blog } from '../comp/blog/blog';
 import { ProjectCalendar } from '../models/projectCalendar';
+import { ActivityCalendar } from '../models/activityCalendar';
+import { userModel } from '../models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -106,5 +108,59 @@ export class SYGDatabaseService {
         specialNotes: event.extendendProps.specialNotes
       }
     });
+  }
+
+  getActivityCalendarData():Observable<ActivityCalendar[]> {
+    return this.firestore.collection('ActivityCalendar')
+    .snapshotChanges()
+    .pipe(
+      map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as ActivityCalendar;
+          const id = a.payload.doc.id;
+
+          const dateData = a.payload.doc.data()  as any;
+          const sDate: Date = dateData.start.toDate();
+          const eDate: Date = dateData.end.toDate();
+          data.start = sDate;
+
+          switch(data.VolunteerUIDs.length){
+            case 0: {
+              data.title = "2 volunteers needed";
+              break;
+            }
+            case 1: {
+              data.title = "1 more volunteer needed";
+              break;
+            }
+            default: {
+              data.title = "Open";
+              break;
+            }
+          }
+          
+          data.start = sDate;
+          data.end = eDate;
+
+          return { id, ...data };
+        });
+      })
+    );
+  }
+
+  getUsers(): Observable<userModel[]>{
+    return this.firestore.collection('Users')
+    .snapshotChanges()
+    .pipe(
+      map(changes => {
+        return changes.map(a => {
+          const queryData: any = a.payload.doc.data();
+          const data = a.payload.doc.data() as userModel;
+          const id = a.payload.doc.id;
+
+          return { id, ...data };
+        });
+      })
+    );
   }
 }
