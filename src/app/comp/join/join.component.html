@@ -1,13 +1,76 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="col-sm-9 col-md-7 col-lg-6 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Sign Up!</h5>
+            <h3 class="card-title text-center">Sign Up!</h3>
             <form class="form-signin">
-              <div class="form-label-group">
-                <label>Enter your email:</label>
+              <p class="font-weight-bold">
+                Please choose, would you like to be a
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline1"
+                  name="customRadioInline1"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="customRadioInline1"
+                  >Member</label
+                >
+              </div>
+              <p></p>
+              <p>or</p>
+              <div
+                class="custom-control custom-radio custom-control-inline centre"
+              >
+                <input
+                  type="radio"
+                  id="customRadioInline2"
+                  name="customRadioInline1"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="customRadioInline2"
+                  >Volunteer</label
+                >
+              </div>
+              <div>
+                <br />
+                <h3>Your Details</h3>
+                <br />
+                <label>First Name</label>
+                <input
+                  class="form-control"
+                  name="firstNameInput"
+                  placeholder="Firstname"
+                  required
+                  [(ngModel)]="firstName"
+                  autofocus
+                />
+                <br />
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  name="lastNameInput"
+                  placeholder="Lastname"
+                  required
+                  [(ngModel)]="lastName"
+                  autofocus
+                />
+                <br />
+                <label>Age</label>
+                <input
+                  class="form-control"
+                  name="ageInput"
+                  type="number"
+                  placeholder="Age"
+                  required
+                  [(ngModel)]="age"
+                  autofocus
+                />
+                <br />
+                <label>Email</label>
                 <input
                   class="form-control"
                   name="emailInput"
@@ -18,7 +81,7 @@
                 />
               </div>
               <br />
-              <label>Enter your password:</label>
+              <label>Password</label>
               <div class="form-label-group">
                 <input
                   type="password"
@@ -29,6 +92,100 @@
                   required
                 />
               </div>
+              <br />
+              <label>Mobile</label>
+              <input
+                class="form-control"
+                name="mobileInput"
+                type="tel"
+                placeholder="Mobile Number"
+                required
+                [(ngModel)]="mobileNumber"
+                autofocus
+              />
+              <br />
+              <p class="font-weight-bold">
+                Would you be interested in getting involed with Sligo Youth
+                Group Projects?
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="interestedYes"
+                  name="interested"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="interestedYes"
+                  >Yes</label
+                >
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="interestedNo"
+                  name="interested"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="interestedNo"
+                  >No</label
+                >
+              </div>
+              <div>
+                <br />
+                <label for="skillsText" class="font-weight-bold"
+                  >Are there any skills or activities you would like to tell us
+                  about or be willing to offer?</label
+                >
+                <textarea
+                  class="form-control rounded-0"
+                  id="skillsText"
+                  rows="3"
+                ></textarea>
+              </div>
+              <br />
+              <p class="font-weight-bold">
+                Would you be interested in getting involed with Sligo Youth
+                Group Projects?
+              </p>
+              <div class="form-check" *ngFor="let act of Activities">
+                <input
+                  class="form-check-input"
+                  (change)="onChange(act.name, $event.target.checked)"
+                  name="{{ act.name }}"
+                  type="checkbox"
+                  id="{{ act.name }}"
+                />
+                <label class="form-check-label" for="{{ act.name }}">
+                  {{ act.name }}
+                </label>
+              </div>
+              <br />
+              <p class="font-weight-bold">
+                Do you have Garda Vetting?
+              </p>
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="gardaVettingYes"
+                  name="gardaVetting"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="gardaVettingYes"
+                  >Yes</label
+                >
+              </div>
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="gardaVettingNo"
+                  name="gardaVetting"
+                  class="custom-control-input"
+                />
+                <label class="custom-control-label" for="gardaVettingNo"
+                  >No</label
+                >
+              </div>
+              <br />
               <br />
               <button class="btn btn-primary btn-block " (click)="Register()">
                 Sign Up!
