@@ -50,3 +50,18 @@ button{
     display: inline-block;
     margin-bottom: 10px;
 }
+
+/* activity Calendar */
+.activityCalendar .fc-mon,
+.activityCalendar .fc-wed,
+.activityCalendar .fc-fri { 
+    background-color: #d2f8d2; 
+} 
+
+.activityCalendar .fc-event{
+    padding: 20px 5px;
+}
+
+.modal-li {
+    margin-left: 20px;
+}

@@ -1,18 +1,18 @@
 export interface Activity {
-    Name: string;
-    Selected: boolean;
+  Name: string;
+  Selected: boolean;
 }
 
 export interface userModel {
-    Activities: Activity[];
-    Age: number;
-    Description: string;
-    FeaturedImage: string;
-    FirstName: string;
-    Hobbies: string;
-    LastName: string;
-    Mobile: string;
-    Role: string[];
-    UserUID: string;
-    WeekdaysAttending: boolean[];
+  FirstName: string;
+  LastName: string;
+  Age: number;
+  Activities: Activity[];
+  Description: string;
+  FeaturedImage: string;
+  Hobbies: string;
+  Mobile: string;
+  Role: string[];
+  UserUID?: string;
+  WeekdaysAttending?: boolean[];
 }

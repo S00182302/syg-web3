@@ -5,7 +5,7 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up!</h3>
-            <form class="form-signin">
+            <form class="form-signin" [formGroup]="registerForm">
               <p class="font-weight-bold">
                 Please choose, would you like to be a
               </p>
@@ -13,8 +13,10 @@
                 <input
                   type="radio"
                   id="customRadioInline1"
-                  name="customRadioInline1"
+                  name="userType"
+                  formControlName="userType"
                   class="custom-control-input"
+                  value="Member"
                 />
                 <label class="custom-control-label" for="customRadioInline1"
                   >Member</label
@@ -22,14 +24,14 @@
               </div>
               <p></p>
               <p>or</p>
-              <div
-                class="custom-control custom-radio custom-control-inline centre"
-              >
+              <div class="custom-control custom-radio custom-control-inline">
                 <input
                   type="radio"
                   id="customRadioInline2"
-                  name="customRadioInline1"
+                  name="userType"
+                  formControlName="userType"
                   class="custom-control-input"
+                  value="Volunteer"
                 />
                 <label class="custom-control-label" for="customRadioInline2"
                   >Volunteer</label
@@ -45,7 +47,7 @@
                   name="firstNameInput"
                   placeholder="Firstname"
                   required
-                  [(ngModel)]="firstName"
+                  formControlName="firstName"
                   autofocus
                 />
                 <br />
@@ -55,7 +57,7 @@
                   name="lastNameInput"
                   placeholder="Lastname"
                   required
-                  [(ngModel)]="lastName"
+                  formControlName="lastName"
                   autofocus
                 />
                 <br />
@@ -66,7 +68,7 @@
                   type="number"
                   placeholder="Age"
                   required
-                  [(ngModel)]="age"
+                  formControlName="age"
                   autofocus
                 />
                 <br />
@@ -76,7 +78,8 @@
                   name="emailInput"
                   placeholder="Email"
                   required
-                  [(ngModel)]="emailInput"
+                  formControlName="emailInput"
+                  [(ngModel)]="email"
                   autofocus
                 />
               </div>
@@ -88,7 +91,8 @@
                   name="inputPassword"
                   class="form-control"
                   placeholder="Password"
-                  [(ngModel)]="passwordInput"
+                  formControlName="passwordInput"
+                  [(ngModel)]="password"
                   required
                 />
               </div>
@@ -100,7 +104,7 @@
                 type="tel"
                 placeholder="Mobile Number"
                 required
-                [(ngModel)]="mobileNumber"
+                formControlName="mobile"
                 autofocus
               />
               <br />
@@ -112,8 +116,10 @@
                 <input
                   type="radio"
                   id="interestedYes"
-                  name="interested"
+                  name="involvement"
                   class="custom-control-input"
+                  formControlName="involvement"
+                  value="Yes"
                 />
                 <label class="custom-control-label" for="interestedYes"
                   >Yes</label
@@ -123,8 +129,10 @@
                 <input
                   type="radio"
                   id="interestedNo"
-                  name="interested"
+                  name="involvement"
                   class="custom-control-input"
+                  formControlName="involvement"
+                  value="No"
                 />
                 <label class="custom-control-label" for="interestedNo"
                   >No</label
@@ -140,6 +148,7 @@
                   class="form-control rounded-0"
                   id="skillsText"
                   rows="3"
+                  formControlName="skills"
                 ></textarea>
               </div>
               <br />
@@ -147,18 +156,27 @@
                 Would you be interested in getting involed with Sligo Youth
                 Group Projects?
               </p>
-              <div class="form-check" *ngFor="let act of Activities">
+
+              <div
+                class="form-check custom-checkbox"
+                *ngFor="let act of Activities"
+              >
                 <input
-                  class="form-check-input"
+                  class="form-check-input custom-control-input"
+                  type="checkbox"
                   (change)="onChange(act.name, $event.target.checked)"
                   name="{{ act.name }}"
                   type="checkbox"
-                  id="{{ act.name }}"
+                  id="{{ act.id }}"
                 />
-                <label class="form-check-label" for="{{ act.name }}">
+                <label
+                  class="form-check-label custom-control-label"
+                  for="{{ act.id }}"
+                >
                   {{ act.name }}
                 </label>
               </div>
+
               <br />
               <p class="font-weight-bold">
                 Do you have Garda Vetting?
@@ -168,7 +186,9 @@
                   type="radio"
                   id="gardaVettingYes"
                   name="gardaVetting"
+                  formControlName="gardaVetting"
                   class="custom-control-input"
+                  value="Yes"
                 />
                 <label class="custom-control-label" for="gardaVettingYes"
                   >Yes</label
@@ -179,7 +199,9 @@
                   type="radio"
                   id="gardaVettingNo"
                   name="gardaVetting"
+                  formControlName="gardaVetting"
                   class="custom-control-input"
+                  value="No"
                 />
                 <label class="custom-control-label" for="gardaVettingNo"
                   >No</label
@@ -187,7 +209,11 @@
               </div>
               <br />
               <br />
-              <button class="btn btn-primary btn-block " (click)="Register()">
+              <button
+                class="btn btn-primary btn-block "
+                (click)="dataPush()"
+                (click)="Register()"
+              >
                 Sign Up!
               </button>
             </form>

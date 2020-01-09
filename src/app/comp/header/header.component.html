@@ -67,20 +67,21 @@
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
-          routerLink="/projectCalendar"
+          routerLink="/activityCalendar"
           routerLinkActive="active"
-          >PROJECT CALENDAR</a
+          >ACTIVITY CALENDAR</a
         >
       </li>
       <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
-          routerLink="/activityCalendar"
+          routerLink="/projectCalendar"
           routerLinkActive="active"
-          >ACTIVITY CALENDAR</a
+          >PROJECT CALENDAR</a
         >
       </li>
+      
       <li class="nav-item">
         <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
       </li>
@@ -154,20 +155,21 @@
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
-          routerLink="/projectCalendar"
+          routerLink="/activityCalendar"
           routerLinkActive="active"
-          >PROJECT CALENDAR</a
+          >ACTIVITY CALENDAR</a
         >
       </li>
       <li *ngIf="isLoggedIn" class="nav-item">
         <a
           class="nav-link"
           (click)="isCollapsed = !isCollapsed"
-          routerLink="/activityCalendar"
+          routerLink="/projectCalendar"
           routerLinkActive="active"
-          >ACTIVITY CALENDAR</a
+          >PROJECT CALENDAR</a
         >
       </li>
+      
     </ul>
   </div>
 </nav>
