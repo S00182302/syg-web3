@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { first } from "rxjs/operators";
 import { AuthService } from "src/app/service/auth.service";
 import { Router } from "@angular/router";
 
@@ -12,9 +11,13 @@ export class HomeComponent implements OnInit {
   featuredImg: string = "assets/images/youth-group.jpg";
   userDetails: any;
 
-  constructor() {}
+  isLoggedIn: boolean = false;
+
+  constructor(private auth: AuthService, public router: Router) {
+
+  }
 
   ngOnInit() {
-    //this.loginCheck();
+    this.isLoggedIn = this.auth.isLoggedIn();
   }
 }
