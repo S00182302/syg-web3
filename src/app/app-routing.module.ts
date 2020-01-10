@@ -12,6 +12,7 @@ import { ProjectsComponent } from "./comp/projects/projects.component";
 import { ActivityCalendarComponent } from "./comp/activity-calendar/activity-calendar.component";
 import { AuthGuard } from "./auth-gaurd.guard";
 import { ForgotPasswordComponent } from "./comp/forgot-password/forgot-password.component";
+import { CreateBlogComponent } from "./comp/create-blog/create-blog.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: "contact", component: ContactComponent },
   { path: "login", component: LoginComponent },
   { path: "join", component: JoinComponent },
+  { path: "createblog", component: CreateBlogComponent },
   {
     path: "projectCalendar",
     component: ProjectsComponent,

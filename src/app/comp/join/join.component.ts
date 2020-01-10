@@ -3,7 +3,6 @@ import { AuthService } from "src/app/service/auth.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
 import { userModel } from "src/app/models/userModel";
-import { Activity } from "../activities/activity";
 
 @Component({
   selector: "app-join",
@@ -16,24 +15,52 @@ export class JoinComponent implements OnInit {
     private sygDB: SYGDatabaseService
   ) {}
 
+  //Declaring Variables
   userDetails: any;
   isForgotPassword: boolean;
-  responseMessage: string = "";
+  responseMessage: string = null;
   responseMessageType: string = "";
   newUser: userModel;
+  typeSelect: string;
 
   //Array That is being populated by selected activities upon registration
   assistActivities: Array<any> = [];
 
+  //Array That is being populated by days selected upon registration
+  daysSelected: Array<any> = [];
+
+  //Days Object to hold name value and id to display on front end
+  Days = [
+    { name: "Monday", id: 1 },
+    { name: "Wednesday", id: 2 },
+    { name: "Friday", id: 3 }
+  ];
   //Activities Defined for WebPage Checkboxes
   Activities: Array<any> = [];
 
-  //Fills assistActivities Array when a checkbox is selected. And removes if unselected (Using this to push to firestore collection)
+  //Fills assistActivities Array when a checkbox is selected. And removes if unselected (Using this to push to firestore collection for Activities)
   onChange(activity: string, isChecked: boolean) {
     if (isChecked) {
       this.assistActivities.push(activity);
     } else {
       this.assistActivities = this.assistActivities.filter(a => a !== activity);
+    }
+  }
+  //Fills daysSelected Array when a checkbox is selected. And removes if unselected (Using this to push to firestore collection for WeekDaysAttending)
+  onChangeDays(days: string, isChecked: boolean) {
+    if (isChecked) {
+      this.daysSelected.push(days);
+    } else {
+      this.daysSelected = this.daysSelected.filter(a => a !== days);
+    }
+  }
+
+  //Assigning value to typeSelect when either Member or Volunteered is selected. This is used for extra fields to dynamically display if Member is selected
+  onUserChange(user: string, isChecked: boolean) {
+    if (isChecked) {
+      this.typeSelect = user;
+    } else {
+      this.typeSelect = user;
     }
   }
 
@@ -44,6 +71,7 @@ export class JoinComponent implements OnInit {
       .then(
         res => {
           this.IsUserLoggedIn();
+          this.ShowMessage("successful", "Succesful");
         },
         err => {
           this.ShowMessage("danger", err.message);
@@ -63,13 +91,11 @@ export class JoinComponent implements OnInit {
         Activities: this.assistActivities,
         Hobbies: this.skills.value,
         UserUID: null,
-        WeekdaysAttending: null,
+        WeekdaysAttending: this.daysSelected,
         FeaturedImage: null,
         Description: null
       };
-
       this.sygDB.joinData(this.newUser);
-      console.log(this.newUser);
     } else if (this.userType.value == "Volunteer") {
       this.newUser = {
         FirstName: this.firstName.value,
@@ -80,30 +106,18 @@ export class JoinComponent implements OnInit {
         Activities: this.assistActivities,
         Hobbies: this.skills.value,
         UserUID: null,
-        WeekdaysAttending: null,
+        WeekdaysAttending: this.daysSelected,
         FeaturedImage: null,
         Description: null
       };
-
       this.sygDB.joinData(this.newUser);
     }
   }
 
-  //Common Method to Show Message and Hide after 2 seconds
+  //Common Method to Error Show Message
   ShowMessage(type, msg) {
     this.responseMessageType = type;
     this.responseMessage = msg;
-    setTimeout(() => {
-      this.responseMessage = "";
-    }, 2000);
-  }
-
-  checking() {
-    console.log(this.registerForm.value);
-    console.log("UserType:", this.userType.value);
-    console.log("Involvement:", this.involvement.value);
-    console.log("Activities Selected:", this.assistActivities);
-    console.log("Garda Vetting:", this.gardaVettting.value);
   }
 
   //Check localStorage has User Data
@@ -161,6 +175,11 @@ export class JoinComponent implements OnInit {
     mobile: new FormControl("", [Validators.required]),
     involvement: new FormControl("", [Validators.required]),
     skills: new FormControl("", [Validators.required]),
-    gardaVetting: new FormControl("", [Validators.required])
+    gardaVetting: new FormControl("", [Validators.required]),
+    contactFirstName: new FormControl("", [Validators.required]),
+    contactLastName: new FormControl("", [Validators.required]),
+    contactAge: new FormControl("", [Validators.required]),
+    contactEmailInput: new FormControl("", [Validators.required]),
+    contactMobile: new FormControl("", [Validators.required])
   });
 }
