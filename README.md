@@ -9,8 +9,6 @@
   </a>
 </p>
 
-> Create teams, invite friends and keep track of due dates.
-
 ### 🏠 [Homepage](https://github.com/S00182302/syg-web3/tree/DevBranch)
 
 ## Install
