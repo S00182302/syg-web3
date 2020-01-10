@@ -93,6 +93,10 @@ export class SYGDatabaseService {
       );
   }
 
+  createBlog(blog: Blog) {
+    this.firestore.collection("Blog").add(blog);
+  }
+
   createNewProjectEvent(projectEvent: ProjectCalendar): void {
     this.firestore.collection("ProjectCalendar").add(projectEvent);
   }
