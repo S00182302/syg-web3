@@ -12,6 +12,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Volunteer } from '../volunteers/volunteer';
 import $ from 'jquery';
 import { Calendar } from '@fullcalendar/core';
+import { ActivityCalendar } from 'src/app/models/activityCalendar';
+import { userModel } from 'src/app/models/userModel';
 
 
 @Component({
@@ -23,31 +25,24 @@ import { Calendar } from '@fullcalendar/core';
 export class ActivityCalendarComponent implements OnInit {
 
   calendarPlugins = [dayGridPlugin];
-  calendarEvents: ProjectCalendar[];
+  calendarEvents: ActivityCalendar[];
 
   // for modal
   closeResult: string;
   modalTitle: string;
   modalDate: string;
-  multiDay: boolean = false;
-  fullDay: boolean = false;
+  btnText: string = "";
 
-  form1 = new FormGroup({
-    allDayEvent: new FormControl(),
-    multiDayEvent: new FormControl(),
-    startDate: new FormControl(),
-    endDate: new FormControl(),
-    startTime: new FormControl('',[Validators.required]),
-    endTime: new FormControl('',[Validators.required]),
-    title: new FormControl('',[Validators.required, Validators.minLength(50)]),
-    volunteer: new FormControl('',[Validators.required]),
-    description: new FormControl(),
-  });
+  // Current user information
+  users: userModel[] = new Array<userModel>();
+  currentUser: userModel;
+  isValidRole: boolean = false;
+  ActivityList: string[];
+  VolunteerList: string[] = new Array<string>();
+  alreadyVolunteered: boolean = false;
 
-  volunteers: Volunteer[];
-  
 
-  constructor(private modalService: NgbModal, private svc: SYGDatabaseService) { }
+  constructor(private modalService: NgbModal, private svc: SYGDatabaseService, private authsv: AuthService) { }
 
   options: OptionsInput;
   eventsModel: any;
@@ -55,9 +50,24 @@ export class ActivityCalendarComponent implements OnInit {
   
 
   ngOnInit() {
-    this.svc.getProjectData().subscribe(data => this.calendarEvents = data);
-    this.svc.GetVolunteers().subscribe(result => {
-      this.volunteers = result;
+    this.svc.getActivityCalendarData().subscribe(data => this.calendarEvents = data);
+    this.svc.getUsers().subscribe(data => 
+      {
+        data.forEach(element => {
+          if(element.UserUID == this.authsv.user.uid){
+            this.currentUser = element;
+          }
+        });
+    });
+    this.svc.getUsers().subscribe(data => 
+      {
+        data.forEach(element => {
+          for(let i = 0; i<element.Role.length; i++){
+            if(element.Role[i] == "Volunteer"){
+              this.users.push(element);
+            }
+          }
+        });
     });
 
     this.options = {
@@ -71,140 +81,120 @@ export class ActivityCalendarComponent implements OnInit {
         }
       },
       header: {
-        left: '',
+        left: 'dayGridMonth, dayGridWeek',
         center: 'title',
         right: 'today, prev, next'
       },
       plugins: [dayGridPlugin, interactionPlugin, timeGrid]
     };
-
   }
+  
   eventClick(model, content) {
-    //console.log(model);
-    this.modalTitle = "Edit Event";
+
+    this.modalTitle = "Date: ";
     this.modalDate = this.getDateOnlyString(model.event.start);
-    // populate fields from model
-    /* form controls */
-      this.fullDay = model.event.allDay;
-      this.allDayEvent.setValue(model.event.allDay);
-      // check if multi day
-      let startPlus24 = model.event.start.getTime() + (1 * 24 * 60 * 60 * 1000);
-      let endTimeModel: Date = model.event.end;
-      if(endTimeModel != null){
-        if(endTimeModel.getTime() > startPlus24){
-            this.multiDay = true;
+    this.btnText = "Close";
+
+    for(let i = 0; i < this.currentUser.Role.length; i++){
+      if(this.currentUser.Role[i] == "Volunteer" || this.currentUser.Role[i] == "Admin"){
+        this.isValidRole = true;
+      }
+    }
+
+    this.ActivityList = new Array<string>();
+    for(let j = 0; j < this.currentUser.Activities.length; j++){
+      if(this.currentUser.Activities[j].Selected){
+        let alreadyOnList = false;
+        for(let k = 0; k < this.ActivityList.length; k++){
+          if(this.currentUser.Activities[j].Name == this.ActivityList[k]){
+            alreadyOnList = true;
+          }
         }
-        this.endDate.setValue({
-          year: parseInt(endTimeModel.getUTCFullYear()+"", 10),
-          month: parseInt((endTimeModel.getMonth()+1)+"", 10),
-          day: parseInt(endTimeModel.getDate()+"", 10)
-        });
+        if(!alreadyOnList){
+          this.ActivityList.push(this.currentUser.Activities[j].Name);
+        }
       }
-      this.multiDayEvent.setValue(this.multiDay);
-      if(model.event.start != null){
-        this.startTime.setValue({
-          hour: model.event.start.getHours(), 
-          minute: model.event.start.getMinutes()
-        });
+    }
+
+    this.VolunteerList = new Array<string>();
+    for(let j = 0; j < this.users.length; j++){
+      for( let k = 0; k < model.event.extendedProps.VolunteerUIDs.length; k++){
+
+        let alreadyOnList = false;
+        for(let x = 0; x < this.ActivityList.length; x++){
+          if(this.VolunteerList[x] == this.users[j].FirstName + " " + this.users[j].LastName){
+            alreadyOnList = true;
+          }
+        }
+        if(!alreadyOnList){
+          if(this.users[j].UserUID == model.event.extendedProps.VolunteerUIDs[k]){
+            this.VolunteerList.push(this.users[j].FirstName + " " + this.users[j].LastName);
+          }
+        }
       }
-      if(model.event.end != null){
-        this.endTime.setValue({
-          hour: model.event.end.getHours(), 
-          minute: model.event.end.getMinutes()
-        });
-      }else if(model.event.start != null){
-        this.endTime.setValue({
-          hour: model.event.start.getHours(), 
-          minute: model.event.start.getMinutes()
-        });
+    }
+
+    this.alreadyVolunteered = false;
+    for(let i = 0; i < model.event.extendedProps.VolunteerUIDs.length; i++){
+      if(this.currentUser.UserUID == model.event.extendedProps.VolunteerUIDs){
+        this.alreadyVolunteered = true;
       }
-      this.title.setValue(model.event.title);
-      let volunteerID = model.event.extendedProps.extendendProps.leadVolunteer;
-      this.volunteer.setValue(volunteerID, {onlySelf: true});
-      this.description.setValue(model.event.extendedProps.description);
+    }
+    
+    
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.UpdateProjectEvent(model);
+      this.isValidRole = false;
+
     }, (reason) => {
-      this.resetFormData();
+      
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.isValidRole = false;
     });
   }
-
-
-  eventDragStop(model) {
-    //console.log(model);
-  }
-
-  eventDrop(model) {
-    let newCalendarEvent: ProjectCalendar;
-    let start = model.event.start;
-    let end = (model.event.end == null) ? model.event.start : model.event.end;
-
-    newCalendarEvent = {
-      id: model.event.id,
-      start: start,
-      end: end,
-      title: model.event.title,
-      description: model.event.extendedProps.description,
-      extendendProps: {
-        leadVolunteer: model.event.extendedProps.extendendProps.leadVolunteer, 
-        specialNotes: model.event.extendedProps.extendendProps.specialNotes
-      },
-      allDay: model.event.allDay
-    };
-
-    this.svc.updateProjectEvent(newCalendarEvent);
-    this.resetFormData();
-  }
-
 
   dateClick(model, content) {
-    this.modalTitle = "Add Event";
-    this.modalDate = model.dateStr;
 
-    //time picker
-    this.startTime.setValue({hour: 8, minute: 30});
-    this.endTime.setValue({hour: 9, minute: 30});
+    this.ActivityList = new Array<string>();
+    this.VolunteerList = new Array<string>();
+    this.alreadyVolunteered = false;
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.NewCalendarEvent(model);
-    }, (reason) => {
-      this.resetFormData();
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    let d = new Date(model.date).getDay();
+    let isValidDay = (d == 1 || d == 3 || d == 5 ) ? true : false ;
+
+    // check if event exists for this date
+    this.calendarEvents.forEach(event => {
+      if(this.getDateOnlyString(event.start) == this.getDateOnlyString(model.date)){
+        isValidDay = false;
+      }
     });
-  }
-  updateHeader() {
-    this.options.header = {
-      left: 'prev,next myCustomButton',
-      center: 'title',
-      right: ''
-    };
-  }
-  updateEvents() {
-    this.eventsModel = [{
-      title: 'Updaten Event',
-      start: this.yearMonth + '-08',
-      end: this.yearMonth + '-10'
-    }];
-  }
-  get yearMonth(): string {
-    const dateObj = new Date();
-    return dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1);
-  }
 
-  // Modal controllers
-  /*
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+
+    for(let i = 0; i < this.currentUser.Role.length; i++){
+      if(this.currentUser.Role[i] == "Volunteer" || this.currentUser.Role[i] == "Admin"){
+        this.isValidRole = true;
+      }
+    }
+
+    if(isValidDay){
+      this.modalTitle = "Date: ";
+      this.modalDate = model.dateStr;
+      this.btnText = "Close";
+
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+        this.isValidRole = false;
+
+      }, (reason) => {
+        
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        this.isValidRole = false;
+
+      });
+    }
   }
-  */
+  
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -215,150 +205,7 @@ export class ActivityCalendarComponent implements OnInit {
     }
   }
 
-  // Check checkbox values
-  checkMulti(values: any){
-    this.multiDay = values.currentTarget.checked;
-  }
-  checkFullDay(values: any){
-    this.fullDay = values.currentTarget.checked;
-    if(this.fullDay){
-      this.endDate.setValue(null);
-    }else{
-      if(this.endTime.value == null){
-        this.endTime.setValue({
-          hour: 10, 
-          minute: 30
-        });
-      }
-    }
-  }
-
-  // volunteer dropdown
-  changeVolunteer(e) {
-    this.volunteer.setValue(e.target.value, {
-      onlySelf: true
-    })
-  }
-
-  NewCalendarEvent(model: any){
-    let sDate = (this.startDate.value == null ? model.dateStr : this.startDate.value );
-    let eDate;
-    if(this.endDate.value == null){
-      // event end on same day
-      eDate = sDate;
-    } else {
-      // event end date provided
-      // format date
-      let year = this.endDate.value.year;
-      let month = this.endDate.value.month+"";
-      let day = this.endDate.value.day+"";
-
-      month = (month.length < 2 ? "0"+month : month)
-      day = (day.length < 2 ? "0"+day : day)
-      // assign new format
-      eDate = year+"-"+month+"-"+day;
-    }
-
-    let newCalendarEvent: ProjectCalendar;
-    let start;
-    let end;
-
-    if(this.allDayEvent.value)
-    {
-      start = new Date(sDate+"T00:00");
-      end = new Date(sDate+"23:59:59");
-    }
-    else
-    {
-      start = this.getDateTimeFormat(sDate, this.startTime.value.hour, this.startTime.value.minute);
-      end = this.getDateTimeFormat(eDate, this.endTime.value.hour, this.endTime.value.minute);
-    }
-
-    newCalendarEvent = {
-      start: start,
-      end: end,
-      title: this.title.value,
-      description: this.description.value,
-      extendendProps: {
-        leadVolunteer: this.volunteer.value, 
-        specialNotes: "Not enabled yet..."
-      },
-      allDay: this.allDayEvent.value
-    };
-    this.svc.createNewProjectEvent(newCalendarEvent);
-    this.resetFormData();
-  }
-
-  UpdateProjectEvent(model: any){
-    let sDate;
-    let sHour: NgbTimeStruct;
-    let sMin: NgbTimeStruct;
-    if(this.startDate.value == null){
-      sDate = this.getDateOnlyString(model.event.start);
-      sHour = model.event.start.getHours();
-      sMin = model.event.start.getMinutes();
-    }else{
-      sDate = this.startDate.value;
-      sHour = this.startTime.value.hour;
-      sMin = this.startTime.value.minute;
-    }
-    
-    
-    let eDate;
-    let eHour: NgbTimeStruct;
-    let eMin: NgbTimeStruct;
-
-    if(this.endDate.value == null){
-      // event end on same day
-      eDate = sDate;
-      eHour = this.endTime.value.hour;
-      eMin = this.endTime.value.minute;
-    } else {
-      // event end date provided
-      // assign new format
-      eDate = this.getDateOnlyString(new Date(this.endDate.value.year,this.endDate.value.month - 1,this.endDate.value.day));
-      eHour = this.endTime.value.hour;
-      eMin = this.endTime.value.minute;
-    }
-    console.log(this.startTime.value.hour)
-    console.log(eHour)
-    let newCalendarEvent: ProjectCalendar;
-    let start;
-    let end;
-
-    if(this.allDayEvent.value)
-    {
-      start = new Date(sDate+"T00:00");
-      end = new Date(sDate+"T23:59:59");
-    }
-    else
-    {
-      start = this.getDateTimeFormat(sDate, sHour, sMin);
-      end = this.getDateTimeFormat(eDate, eHour, eMin);
-    }
-
-    newCalendarEvent = {
-      id: model.event.id,
-      start: start,
-      end: end,
-      title: this.title.value,
-      description: this.description.value,
-      extendendProps: {
-        leadVolunteer: this.volunteer.value, 
-        specialNotes: "Not enabled yet..."
-      },
-      allDay: this.allDayEvent.value
-    };
-
-    this.svc.updateProjectEvent(newCalendarEvent);
-    this.resetFormData();
-  }
-
-  resetFormData(){
-    this.form1.reset();
-    this.multiDay = false;
-    this.fullDay = false;
-  }
+  
 
   getDateTimeFormat(date: string, hour: any, minute: any):Date{
     hour = (hour.toString().length == 1 ? "0"+hour : hour);
@@ -383,15 +230,8 @@ export class ActivityCalendarComponent implements OnInit {
     }
   }
 
-  // form data
-  get allDayEvent () { return this.form1.get('allDayEvent')}
-  get multiDayEvent () { return this.form1.get('multiDayEvent')}
-  get startDate () { return this.form1.get('startDate')}
-  get endDate () { return this.form1.get('endDate')}
-  get startTime () { return this.form1.get('startTime')}
-  get endTime () { return this.form1.get('endTime')}
-  get title () { return this.form1.get('title')}
-  get volunteer () { return this.form1.get('volunteer')}
-  get description () { return this.form1.get('description')}
+
+  
+
 
 }
