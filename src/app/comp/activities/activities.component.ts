@@ -52,6 +52,7 @@ export class ActivitiesComponent implements OnInit {
           }
         }); 
     });
+    
     return false;
   }
 }
