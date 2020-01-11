@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { AuthService } from "src/app/service/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  responseMessage: string = '';
-  responseMessageType: string = '';
+  responseMessage: string = "";
+  responseMessageType: string = "";
   emailInput: string;
   passwordInput: string;
   isForgotPassword: boolean;
@@ -21,16 +21,16 @@ export class LoginComponent implements OnInit {
 
   //Login user with  provided Email/ Password
   Login() {
-    this.responseMessage = '';
+    this.responseMessage = "";
     this.authService.login(this.emailInput, this.passwordInput).then(
       res => {
         console.log(res);
-        this.ShowMessage('success', 'Successfully Logged In!');
+        this.ShowMessage("success", "Successfully Logged In!");
         this.IsUserLoggedIn();
-        this.router.navigate(['home']);
+        this.router.navigate(["home"]);
       },
       err => {
-        this.ShowMessage('danger', err.message);
+        this.ShowMessage("danger", err.message);
       }
     );
   }
@@ -44,22 +44,5 @@ export class LoginComponent implements OnInit {
   ShowMessage(type, msg) {
     this.responseMessageType = type;
     this.responseMessage = msg;
-    setTimeout(() => {
-      this.responseMessage = '';
-    }, 2000);
-  }
-
-  // Send link on given email to reset password
-  ForgotPassword() {
-    this.authService.sendPasswordResetEmail(this.emailInput).then(
-      res => {
-        console.log(res);
-        this.isForgotPassword = false;
-        this.ShowMessage('success', 'Please Check Your Email');
-      },
-      err => {
-        this.ShowMessage('danger', err.message);
-      }
-    );
   }
 }
