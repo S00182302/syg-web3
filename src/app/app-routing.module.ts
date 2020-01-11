@@ -13,6 +13,7 @@ import { ActivityCalendarComponent } from "./comp/activity-calendar/activity-cal
 import { AuthGuard } from "./auth-gaurd.guard";
 import { ForgotPasswordComponent } from "./comp/forgot-password/forgot-password.component";
 import { CreateBlogComponent } from "./comp/create-blog/create-blog.component";
+import { CreateActivityComponent } from "./comp/create-activity/create-activity.component"
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "join", component: JoinComponent },
   { path: "createblog", component: CreateBlogComponent },
+  { path: "createactivity", component: CreateActivityComponent },
   {
     path: "projectCalendar",
     component: ProjectsComponent,

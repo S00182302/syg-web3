@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
+import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
+import { Observable } from 'rxjs';
+import { userModel } from 'src/app/models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +13,10 @@ export class AuthService {
   passwordInput: string;
   emailInput: string;
   user: User;
+  userLoggedIn: boolean = false;
 
   //Subscribing to the Authentication State
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth, private svc: SYGDatabaseService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -43,6 +47,7 @@ export class AuthService {
 
   //Logout User
   async logout() {
+    this.user = null;
     return await this.afAuth.auth.signOut();
   }
 
@@ -50,6 +55,8 @@ export class AuthService {
   isLoggedIn() {
     return JSON.parse(localStorage.getItem('user'));
   }
+
+  
 
   //Login With Google
   async loginWithGoogle() {

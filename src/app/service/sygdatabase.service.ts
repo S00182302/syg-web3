@@ -48,6 +48,10 @@ export class SYGDatabaseService {
       );
   }
 
+  createActivity(activity: Activity){
+    this.firestore.collection("Activity").add(activity);
+  }
+
   GetVolunteers(): Observable<Volunteer[]> {
     return this.firestore
       .collection("Volunteer")

@@ -29,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { CountUpModule } from "countup.js-angular2";
 import { ForgotPasswordComponent } from "./comp/forgot-password/forgot-password.component";
+import { HttpClientModule } from '@angular/common/http';
 
 import { FlatpickrModule } from "angularx-flatpickr";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
@@ -37,6 +38,7 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { FullCalendarModule } from "@fullcalendar/angular";
+import { CreateActivityComponent } from './comp/create-activity/create-activity.component';
 
 @NgModule({
   declarations: [
@@ -59,10 +61,12 @@ import { FullCalendarModule } from "@fullcalendar/angular";
     ContactComponent,
     CreateBlogComponent,
     ActivityComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    CreateActivityComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
