@@ -1,12 +1,45 @@
 <div class="home main">
-    <img class="featuredImg" [src]="featuredImg" alt="Sligo Youth Group featured image"/>
-    <div class="top">
-        <h1>Home</h1>
-        <button class="btn-primary" type="button">JOIN</button>
-    </div>
-    <div class="content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mi ipsum, porttitor non lacinia ac, dapibus eget libero. In efficitur condimentum mi ac volutpat. Phasellus condimentum at dui ac sollicitudin. Sed et euismod risus, dignissim convallis lorem. Nunc ut leo a ante sagittis rutrum. Sed at est velit. Aliquam condimentum magna egestas mi rhoncus condimentum.</p>
-        <p>Ut hendrerit mauris eu nulla imperdiet, porta auctor nisi eleifend. Aenean fermentum nunc lacus, et pharetra metus porta ornare. Donec molestie metus non neque ornare porttitor. Etiam sed congue lorem. Duis sodales justo vel ante cursus blandit. Donec sed pharetra ex. Morbi facilisis ante at erat molestie dapibus. In at malesuada nisl, id mattis justo. Pellentesque bibendum urna a sem ultrices, eget aliquam quam interdum. Cras vel mauris non nunc laoreet viverra. Nulla quam nunc, aliquam id metus consectetur, vestibulum semper ipsum. Suspendisse vitae hendrerit urna. Ut rhoncus venenatis velit, non eleifend nibh. Sed blandit ante eget felis aliquet, a blandit ipsum malesuada. Donec auctor efficitur nisl eget malesuada. Morbi auctor vel mauris eget varius.</p>
-        <p>Vivamus neque ante, aliquet sit amet euismod at, varius in enim. Etiam tincidunt sem iaculis diam porttitor lobortis. Sed feugiat, quam non dapibus placerat, justo nibh volutpat erat, a consequat nisi massa finibus orci. Integer sit amet ultricies nisi. Morbi ut auctor turpis. Vivamus fringilla enim et mattis scelerisque. Quisque nibh turpis, venenatis quis luctus in, suscipit nec ante. Nulla tincidunt velit id volutpat luctus. In tellus elit, sodales vel lorem sed, aliquam fringilla ex. Nullam porttitor tempus metus in cursus. Integer tincidunt, velit sit amet imperdiet lacinia, justo arcu interdum lacus, id vehicula turpis nulla id risus. Nullam a dui volutpat, molestie velit a, vehicula mi.</p>
-    </div>
+  <img
+    class="featuredImg"
+    [src]="featuredImg"
+    alt="Sligo Youth Group featured image"
+  />
+  <div class="top">
+    <h1>Home</h1>
+    <button *ngIf="!isLoggedIn" class="btn-primary" type="button" (click)="router.navigate(['join'])" >JOIN</button>
+  </div>
+  <div class="content">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mi ipsum,
+      porttitor non lacinia ac, dapibus eget libero. In efficitur condimentum mi
+      ac volutpat. Phasellus condimentum at dui ac sollicitudin. Sed et euismod
+      risus, dignissim convallis lorem. Nunc ut leo a ante sagittis rutrum. Sed
+      at est velit. Aliquam condimentum magna egestas mi rhoncus condimentum.
+    </p>
+    <p>
+      Ut hendrerit mauris eu nulla imperdiet, porta auctor nisi eleifend. Aenean
+      fermentum nunc lacus, et pharetra metus porta ornare. Donec molestie metus
+      non neque ornare porttitor. Etiam sed congue lorem. Duis sodales justo vel
+      ante cursus blandit. Donec sed pharetra ex. Morbi facilisis ante at erat
+      molestie dapibus. In at malesuada nisl, id mattis justo. Pellentesque
+      bibendum urna a sem ultrices, eget aliquam quam interdum. Cras vel mauris
+      non nunc laoreet viverra. Nulla quam nunc, aliquam id metus consectetur,
+      vestibulum semper ipsum. Suspendisse vitae hendrerit urna. Ut rhoncus
+      venenatis velit, non eleifend nibh. Sed blandit ante eget felis aliquet, a
+      blandit ipsum malesuada. Donec auctor efficitur nisl eget malesuada. Morbi
+      auctor vel mauris eget varius.
+    </p>
+    <p>
+      Vivamus neque ante, aliquet sit amet euismod at, varius in enim. Etiam
+      tincidunt sem iaculis diam porttitor lobortis. Sed feugiat, quam non
+      dapibus placerat, justo nibh volutpat erat, a consequat nisi massa finibus
+      orci. Integer sit amet ultricies nisi. Morbi ut auctor turpis. Vivamus
+      fringilla enim et mattis scelerisque. Quisque nibh turpis, venenatis quis
+      luctus in, suscipit nec ante. Nulla tincidunt velit id volutpat luctus. In
+      tellus elit, sodales vel lorem sed, aliquam fringilla ex. Nullam porttitor
+      tempus metus in cursus. Integer tincidunt, velit sit amet imperdiet
+      lacinia, justo arcu interdum lacus, id vehicula turpis nulla id risus.
+      Nullam a dui volutpat, molestie velit a, vehicula mi.
+    </p>
+  </div>
 </div>

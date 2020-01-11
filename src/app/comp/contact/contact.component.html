@@ -6,8 +6,7 @@
           [latitude]="latitude"
           [longitude]="longitude"
           *ngIf="locationChosen"></agm-marker>
-      </agm-map>
-     
+      </agm-map>     
     </div>
     <br />
     <div>
@@ -25,8 +24,7 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Send us a message!</h5>
-            
+            <h5 class="card-title text-center">Send us a message!</h5>          
             <form class="form-signin" [formGroup]="myGroup">
               <div class="form-label-group" >
                 <label>Name</label>
@@ -71,6 +69,20 @@
               <button class="btn btn-primary btn-block text-uppercase"
               (click)=sendMessage()
               >
+
+              <fieldset>
+                <legend>Are you a member or a volunteer?</legend>
+                <label>
+                  <input type="radio" name="morv" value="yes" />
+                  Yes
+                </label>
+
+                <label>
+                  <input type="radio" name="morv" value="no" />
+                  No
+                </label>
+              </fieldset>
+              <button class="btn btn-primary btn-block text-uppercase">
                 Send
               </button>
               <br />
@@ -80,4 +92,5 @@
       </div>
     </div>
   </div>
+</body>
 </body>

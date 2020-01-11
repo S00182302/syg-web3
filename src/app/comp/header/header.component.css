@@ -5,10 +5,10 @@
     display: inline-block;
     margin: 10px;
 }
-.nav-link {
+.large-menu .nav-link {
     display: inline-block;
 }
-.navbar-nav {
+.large-menu .navbar-nav {
     flex-direction: row;
 }
 
@@ -21,6 +21,9 @@ nav {
 }
 .main-logo {
     width: 200px;
+}
+.navbar-toggler{
+    float: right;
 }
 .hamburger {
     position: relative;
@@ -40,7 +43,7 @@ nav {
 }
 .small-menu{
     position: absolute;
-    width: 75%;
+    width: 250px;
     background-color: #707070;
     top: 0;
     left: 0;
@@ -88,9 +91,22 @@ nav {
     text-decoration: none;
 }
 
+.largeNav {
+    display: none;
+}
+.smallNav {
+    display: block;
+}
+
 @media screen and (min-width: 769px) {
     .main-logo {
         width: 400px;
-        padding:  20px 20px 0;
+        padding:  20px 0 0 40px;
+    }
+    .smallNav {
+        display: none;
+    }
+    .largeNav {
+        display: block;
     }
   }

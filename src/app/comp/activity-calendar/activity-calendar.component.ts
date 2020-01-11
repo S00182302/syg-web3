@@ -1,202 +1,237 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef
-} from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours
-} from 'date-fns';
-import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView
-} from 'angular-calendar';
+import { NgbModal, ModalDismissReasons, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { OptionsInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGrid from '@fullcalendar/timegrid';
+import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
+import { ProjectCalendar } from 'src/app/models/projectCalendar';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Volunteer } from '../volunteers/volunteer';
+import $ from 'jquery';
+import { Calendar } from '@fullcalendar/core';
+import { ActivityCalendar } from 'src/app/models/activityCalendar';
+import { userModel } from 'src/app/models/userModel';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
 
 @Component({
   selector: 'app-activity-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './activity-calendar.component.html',
   styleUrls: ['./activity-calendar.component.css']
 })
 
-
 export class ActivityCalendarComponent implements OnInit {
 
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+  calendarPlugins = [dayGridPlugin];
+  calendarEvents: ActivityCalendar[];
 
-  view: CalendarView = CalendarView.Month;
+  // for modal
+  closeResult: string;
+  modalTitle: string;
+  modalDate: string;
+  btnText: string = "";
 
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      }
-    }
-  ];
-
-  refresh: Subject<any> = new Subject();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
-
-  activeDayIsOpen: boolean = true;
+  // Current user information
+  users: userModel[] = new Array<userModel>();
+  currentUser: userModel;
+  isValidRole: boolean = false;
+  ActivityList: string[];
+  VolunteerList: string[] = new Array<string>();
+  alreadyVolunteered: boolean = false;
 
 
-  constructor(private auth: AuthService, private modal: NgbModal) { }
+  constructor(private modalService: NgbModal, private svc: SYGDatabaseService, private authsv: AuthService) { }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map(iEvent => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        }
-      }
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter(event => event !== eventToDelete);
-  }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
+  options: OptionsInput;
+  eventsModel: any;
+  @ViewChild('fullcalendar', {static: false}) fullcalendar: FullCalendarComponent;
+  
 
   ngOnInit() {
+    this.svc.getActivityCalendarData().subscribe(data => this.calendarEvents = data);
+    this.svc.getUsers().subscribe(data => 
+      {
+        data.forEach(element => {
+          if(element.UserUID == this.authsv.user.uid){
+            this.currentUser = element;
+          }
+        });
+    });
+    this.svc.getUsers().subscribe(data => 
+      {
+        data.forEach(element => {
+          for(let i = 0; i<element.Role.length; i++){
+            if(element.Role[i] == "Volunteer"){
+              this.users.push(element);
+            }
+          }
+        });
+    });
+
+    this.options = {
+      editable: true,
+      customButtons: {
+        myCustomButton: {
+          text: 'custom!',
+          click: function () {
+            alert('clicked the custom button!');
+          }
+        }
+      },
+      header: {
+        left: 'dayGridMonth, dayGridWeek',
+        center: 'title',
+        right: 'today, prev, next'
+      },
+      plugins: [dayGridPlugin, interactionPlugin, timeGrid]
+    };
   }
+  
+  eventClick(model, content) {
+
+    this.modalTitle = "Date: ";
+    this.modalDate = this.getDateOnlyString(model.event.start);
+    this.btnText = "Close";
+
+    for(let i = 0; i < this.currentUser.Role.length; i++){
+      if(this.currentUser.Role[i] == "Volunteer" || this.currentUser.Role[i] == "Admin"){
+        this.isValidRole = true;
+      }
+    }
+
+    this.ActivityList = new Array<string>();
+    for(let j = 0; j < this.currentUser.Activities.length; j++){
+      if(this.currentUser.Activities[j].Selected){
+        let alreadyOnList = false;
+        for(let k = 0; k < this.ActivityList.length; k++){
+          if(this.currentUser.Activities[j].Name == this.ActivityList[k]){
+            alreadyOnList = true;
+          }
+        }
+        if(!alreadyOnList){
+          this.ActivityList.push(this.currentUser.Activities[j].Name);
+        }
+      }
+    }
+
+    this.VolunteerList = new Array<string>();
+    for(let j = 0; j < this.users.length; j++){
+      for( let k = 0; k < model.event.extendedProps.VolunteerUIDs.length; k++){
+
+        let alreadyOnList = false;
+        for(let x = 0; x < this.ActivityList.length; x++){
+          if(this.VolunteerList[x] == this.users[j].FirstName + " " + this.users[j].LastName){
+            alreadyOnList = true;
+          }
+        }
+        if(!alreadyOnList){
+          if(this.users[j].UserUID == model.event.extendedProps.VolunteerUIDs[k]){
+            this.VolunteerList.push(this.users[j].FirstName + " " + this.users[j].LastName);
+          }
+        }
+      }
+    }
+
+    this.alreadyVolunteered = false;
+    for(let i = 0; i < model.event.extendedProps.VolunteerUIDs.length; i++){
+      if(this.currentUser.UserUID == model.event.extendedProps.VolunteerUIDs){
+        this.alreadyVolunteered = true;
+      }
+    }
+    
+    
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.isValidRole = false;
+
+    }, (reason) => {
+      
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.isValidRole = false;
+    });
+  }
+
+  dateClick(model, content) {
+
+    this.ActivityList = new Array<string>();
+    this.VolunteerList = new Array<string>();
+    this.alreadyVolunteered = false;
+
+    let d = new Date(model.date).getDay();
+    let isValidDay = (d == 1 || d == 3 || d == 5 ) ? true : false ;
+
+    // check if event exists for this date
+    this.calendarEvents.forEach(event => {
+      if(this.getDateOnlyString(event.start) == this.getDateOnlyString(model.date)){
+        isValidDay = false;
+      }
+    });
+
+
+    for(let i = 0; i < this.currentUser.Role.length; i++){
+      if(this.currentUser.Role[i] == "Volunteer" || this.currentUser.Role[i] == "Admin"){
+        this.isValidRole = true;
+      }
+    }
+
+    if(isValidDay){
+      this.modalTitle = "Date: ";
+      this.modalDate = model.dateStr;
+      this.btnText = "Close";
+
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+        this.isValidRole = false;
+
+      }, (reason) => {
+        
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        this.isValidRole = false;
+
+      });
+    }
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
+  
+
+  getDateTimeFormat(date: string, hour: any, minute: any):Date{
+    hour = (hour.toString().length == 1 ? "0"+hour : hour);
+    minute = (minute.toString().length == 1 ? "0"+minute : minute);
+    let dateString = date+'T'+hour+":"+minute+":00";
+    return new Date(dateString);
+  }
+
+  getDateOnlyString(theDate: Date): string {
+    if(theDate != null){
+      // format date
+      let year = theDate.getFullYear();
+      let month = (theDate.getMonth() + 1).toString();
+      let day = theDate.getDate().toString();
+
+      month = (month.length < 2 ? "0"+month : month)
+      day = (day.length < 2 ? "0"+day : day)
+      // assign new format
+      return year+"-"+month+"-"+day;
+    }else{
+      return null;
+    }
+  }
+
+
+  
+
 
 }

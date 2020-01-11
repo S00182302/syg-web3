@@ -1,38 +1,303 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="col-sm-9 col-md-7 col-lg-6 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Sign Up!</h5>
-            <form class="form-signin">
-              <div class="form-label-group">
-                <label>Enter your email:</label>
+            <h3 class="card-title text-center">Sign Up!</h3>
+            <form class="form-signin" [formGroup]="registerForm">
+              <p class="font-weight-bold">
+                Please choose, would you like to be a
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline1"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  (change)="onUserChange('Member', $event.target.checked)"
+                  value="Member"
+                />
+                <label class="custom-control-label" for="customRadioInline1"
+                  >Member</label
+                >
+              </div>
+              <p></p>
+              <p>or</p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline2"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  (change)="onUserChange('Volunteer', $event.target.checked)"
+                  value="Volunteer"
+                />
+                <label class="custom-control-label" for="customRadioInline2"
+                  >Volunteer</label
+                >
+              </div>
+              <div>
+                <br />
+                <h3>Your Details</h3>
+                <br />
+                <label>First Name</label>
+                <input
+                  class="form-control"
+                  name="firstNameInput"
+                  placeholder="Firstname"
+                  required
+                  formControlName="firstName"
+                  autofocus
+                />
+                <br />
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  name="lastNameInput"
+                  placeholder="Lastname"
+                  required
+                  formControlName="lastName"
+                  autofocus
+                />
+                <br />
+                <label>Age</label>
+                <input
+                  class="form-control"
+                  name="ageInput"
+                  type="number"
+                  placeholder="Age"
+                  required
+                  formControlName="age"
+                  autofocus
+                />
+                <br />
+                <label>Email</label>
                 <input
                   class="form-control"
                   name="emailInput"
                   placeholder="Email"
                   required
-                  [(ngModel)]="emailInput"
+                  formControlName="emailInput"
                   autofocus
                 />
               </div>
               <br />
-              <label>Enter your password:</label>
+              <label>Password</label>
               <div class="form-label-group">
                 <input
                   type="password"
                   name="inputPassword"
                   class="form-control"
                   placeholder="Password"
-                  [(ngModel)]="passwordInput"
+                  formControlName="passwordInput"
                   required
                 />
               </div>
               <br />
+              <label>Mobile</label>
+              <input
+                class="form-control"
+                name="mobileInput"
+                type="tel"
+                placeholder="Mobile Number"
+                required
+                formControlName="mobile"
+                autofocus
+              />
+              <br />
+              <!--If Member is selected it'll display this extra information-->
+              <div *ngIf="typeSelect === 'Member'">
+                <div class="border border-dark rounded">
+                  <div class="col px-md-5">
+                    <h3>EMERGENCY CONTACT</h3>
+                    <label class="font-weight-bold">Contact's First Name</label>
+                    <input
+                      class="form-control"
+                      name="firstNameInput"
+                      placeholder="Firstname"
+                      required
+                      formControlName="contactFirstName"
+                      autofocus
+                    />
+                    <br />
+                    <label class="font-weight-bold">Contact's Last Name</label>
+                    <input
+                      class="form-control"
+                      name="lastNameInput"
+                      placeholder="Lastname"
+                      required
+                      formControlName="contactLastName"
+                      autofocus
+                    />
+                    <br />
+                    <label class="font-weight-bold">Contact's Age</label>
+                    <input
+                      class="form-control"
+                      name="ageInput"
+                      type="number"
+                      placeholder="Age"
+                      required
+                      formControlName="contactAge"
+                      autofocus
+                    />
+                    <br />
+                    <label class="font-weight-bold">Contact's Email</label>
+                    <input
+                      class="form-control"
+                      name="emailInput"
+                      placeholder="Email"
+                      required
+                      formControlName="contactEmailInput"
+                      autofocus
+                    />
+                    <br />
+                    <label>Mobile</label>
+                    <input
+                      class="form-control"
+                      name="mobileInput"
+                      type="tel"
+                      placeholder="Mobile Number"
+                      required
+                      formControlName="contactMobile"
+                      autofocus
+                    />
+                    <br />
+                  </div>
+                </div>
+              </div>
+
+              <br />
+              <p class="font-weight-bold">
+                Would you be interested in getting involed with Sligo Youth
+                Group Projects?
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="interestedYes"
+                  name="involvement"
+                  class="custom-control-input"
+                  formControlName="involvement"
+                  value="Yes"
+                />
+                <label class="custom-control-label" for="interestedYes"
+                  >Yes</label
+                >
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="interestedNo"
+                  name="involvement"
+                  class="custom-control-input"
+                  formControlName="involvement"
+                  value="No"
+                />
+                <label class="custom-control-label" for="interestedNo"
+                  >No</label
+                >
+              </div>
+              <div>
+                <br />
+                <label for="skillsText" class="font-weight-bold"
+                  >Are there any skills or activities you would like to tell us
+                  about or be willing to offer?</label
+                >
+                <textarea
+                  class="form-control rounded-0"
+                  id="skillsText"
+                  rows="3"
+                  formControlName="skills"
+                ></textarea>
+              </div>
+              <br />
+              <p class="font-weight-bold">
+                Preferred Days
+              </p>
+              <div class="form-check custom-checkbox" *ngFor="let days of Days">
+                <input
+                  class="form-check-input custom-control-input"
+                  type="checkbox"
+                  (change)="onChangeDays(days.name, $event.target.checked)"
+                  name="{{ days.name }}"
+                  type="checkbox"
+                  id="{{ days.id }}"
+                />
+                <label
+                  class="form-check-label custom-control-label"
+                  for="{{ days.id }}"
+                >
+                  {{ days.name }}
+                </label>
+              </div>
+              <br />
+              <p class="font-weight-bold">
+                Would you be interested in getting involed with Sligo Youth
+                Group Projects?
+              </p>
+
+              <div
+                class="form-check custom-checkbox"
+                *ngFor="let act of Activities"
+              >
+                <input
+                  class="form-check-input custom-control-input"
+                  type="checkbox"
+                  (change)="onChange(act.name, $event.target.checked)"
+                  name="{{ act.name }}"
+                  type="checkbox"
+                  id="{{ act.id }}"
+                />
+                <label
+                  class="form-check-label custom-control-label"
+                  for="{{ act.id }}"
+                >
+                  {{ act.name }}
+                </label>
+              </div>
+
+              <br />
+              <p class="font-weight-bold">
+                Do you have Garda Vetting?
+              </p>
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="gardaVettingYes"
+                  name="gardaVetting"
+                  formControlName="gardaVetting"
+                  class="custom-control-input"
+                  value="Yes"
+                />
+                <label class="custom-control-label" for="gardaVettingYes"
+                  >Yes</label
+                >
+              </div>
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="gardaVettingNo"
+                  name="gardaVetting"
+                  formControlName="gardaVetting"
+                  class="custom-control-input"
+                  value="No"
+                />
+                <label class="custom-control-label" for="gardaVettingNo"
+                  >No</label
+                >
+              </div>
+              <br />
+              <br />
               <button class="btn btn-primary btn-block " (click)="Register()">
                 Sign Up!
               </button>
+
+              <div *ngIf="responseMessage != null">
+                {{ responseMessage }}
+              </div>
             </form>
           </div>
         </div>

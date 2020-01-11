@@ -1,6 +1,11 @@
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
 .main {
     max-width: 1170px;
     margin: 0 auto;
+    padding: 20px;
 }
 .main h1 {
     display: inline-block;
@@ -12,4 +17,57 @@ button{
     font-size: 1.4em;
     border-radius: 10px;
     padding: 5px 60px;
+}
+
+.left {
+    float: left;
+}
+.right{
+    float: right;
+}
+.clear{
+    clear: both;
+}
+
+#allDayEvent,
+#multiDayEvent {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+}
+
+#allDayEventLabel span,
+#multiDayEventLabel span{
+    vertical-align: super;
+}
+
+.dates-times{
+    margin-bottom: 10px;
+}
+
+.times {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* activity Calendar */
+.activityCalendar .fc-mon,
+.activityCalendar .fc-wed,
+.activityCalendar .fc-fri { 
+    background-color: #d2f8d2; 
+} 
+
+.activityCalendar .fc-event{
+    padding: 20px 5px;
+}
+
+.modal-li {
+    margin-left: 20px;
+}
+
+.addNew {
+    float: right;
+    border-radius: 5px;
+    margin-right: 20px;
 }
