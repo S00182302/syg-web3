@@ -1,8 +1,8 @@
 import { Volunteer } from "./../comp/volunteers/volunteer";
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { Observable, of } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { Activity } from "../comp/activities/activity";
 import { Blog } from "../comp/blog/blog";
 import { ProjectCalendar } from "../models/projectCalendar";
@@ -46,6 +46,10 @@ export class SYGDatabaseService {
           });
         })
       );
+  }
+
+  createActivity(activity: Activity) {
+    this.firestore.collection("Activity").add(activity);
   }
 
   GetVolunteers(): Observable<Volunteer[]> {
@@ -168,11 +172,10 @@ export class SYGDatabaseService {
       .pipe(
         map(changes => {
           return changes.map(a => {
-            const queryData: any = a.payload.doc.data();
             const data = a.payload.doc.data() as userModel;
             const id = a.payload.doc.id;
 
-            return { id, ...data };
+            return { id, Email: data.Email, ...data };
           });
         })
       );

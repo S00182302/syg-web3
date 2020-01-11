@@ -65,3 +65,9 @@ button{
 .modal-li {
     margin-left: 20px;
 }
+
+.addNew {
+    float: right;
+    border-radius: 5px;
+    margin-right: 20px;
+}

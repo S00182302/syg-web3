@@ -3,6 +3,8 @@ import { AuthService } from "src/app/service/auth.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
 import { userModel } from "src/app/models/userModel";
+import { Router } from "@angular/router";
+import { async } from "rxjs/internal/scheduler/async";
 
 @Component({
   selector: "app-join",
@@ -10,9 +12,11 @@ import { userModel } from "src/app/models/userModel";
   styleUrls: ["./join.component.css"]
 })
 export class JoinComponent implements OnInit {
+  newUserUID: string;
   constructor(
     private authService: AuthService,
-    private sygDB: SYGDatabaseService
+    private sygDB: SYGDatabaseService,
+    public router: Router
   ) {}
 
   //Declaring Variables
@@ -71,7 +75,9 @@ export class JoinComponent implements OnInit {
       .then(
         res => {
           this.IsUserLoggedIn();
-          this.ShowMessage("successful", "Succesful");
+          this.newUserUID = res.user.uid;
+          this.dataPush();
+          this.router.navigate(["login"]);
         },
         err => {
           this.ShowMessage("danger", err.message);
@@ -80,17 +86,18 @@ export class JoinComponent implements OnInit {
   }
 
   //Pushing the form data to the Database
-  dataPush() {
+  async dataPush() {
     if (this.userType.value == "Member") {
       this.newUser = {
         FirstName: this.firstName.value,
         LastName: this.lastName.value,
         Age: this.age.value,
+        Email: this.emailInput.value.toLowerCase(),
         Mobile: this.mobile.value,
         Role: ["Member"],
         Activities: this.assistActivities,
         Hobbies: this.skills.value,
-        UserUID: null,
+        UserUID: this.newUserUID,
         WeekdaysAttending: this.daysSelected,
         FeaturedImage: null,
         Description: null
@@ -101,11 +108,12 @@ export class JoinComponent implements OnInit {
         FirstName: this.firstName.value,
         LastName: this.lastName.value,
         Age: this.age.value,
+        Email: this.emailInput.value.toLowerCase(),
         Mobile: this.mobile.value,
         Role: ["Volunteer"],
         Activities: this.assistActivities,
         Hobbies: this.skills.value,
-        UserUID: null,
+        UserUID: this.newUserUID,
         WeekdaysAttending: this.daysSelected,
         FeaturedImage: null,
         Description: null

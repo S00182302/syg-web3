@@ -7,6 +7,7 @@ export interface userModel {
   FirstName: string;
   LastName: string;
   Age: number;
+  Email: string;
   Activities: Activity[];
   Description: string;
   FeaturedImage: string;
