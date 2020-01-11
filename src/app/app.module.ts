@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { FullCalendarModule } from "@fullcalendar/angular";
 import { CreateActivityComponent } from './comp/create-activity/create-activity.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -70,12 +71,18 @@ import { CreateActivityComponent } from './comp/create-activity/create-activity.
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    ReactiveFormsModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
+    HttpClientModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    AgmCoreModule.forRoot ({
+      apiKey: 'AIzaSyBB4edoQPLP5vMNXB5Bjt4Nj1PWjtzCNh0'
+    }),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -83,7 +90,7 @@ import { CreateActivityComponent } from './comp/create-activity/create-activity.
     BrowserAnimationsModule,
     FullCalendarModule
   ],
-  providers: [AngularFireAuth],
+  providers: [HttpService,AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
