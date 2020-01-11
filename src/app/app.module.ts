@@ -29,13 +29,14 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CountUpModule } from 'countup.js-angular2';
 import { ForgotPasswordComponent } from './comp/forgot-password/forgot-password.component';
-
-
+import { HttpService } from './comp/Shared/http.service';
+import {ReactiveFormsModule} from '@angular/forms';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,14 +65,20 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    ReactiveFormsModule,
     NgbModule,
     FormsModule,
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    HttpClientModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    AgmCoreModule.forRoot ({
+      apiKey: 'AIzaSyBB4edoQPLP5vMNXB5Bjt4Nj1PWjtzCNh0'
+    })
+    
   ],
-  providers: [AngularFireAuth],
+  providers: [HttpService,AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
