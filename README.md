@@ -35,6 +35,7 @@ npm run test
 
 * Github: [@BrettHenning](https://github.com/S00182302)
 * Github: [@Markw1998](https://github.com/Markw1998)
+* Github: [@S00201400](https://github.com/S00201400)
 
 ## 🤝 Contributing
 
