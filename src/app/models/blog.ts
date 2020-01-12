@@ -7,4 +7,4 @@ export interface Blog {
   lastMod?: string;
   projectID?: number;
   publishDate?: number;
-}
+} 

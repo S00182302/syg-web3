@@ -67,6 +67,6 @@ export class ContactComponent implements OnInit {
       );
 
     //Clears all Input fields on form
-    this.myGroup.reset();
+    this.myGroup.reset(); 
   }
 }

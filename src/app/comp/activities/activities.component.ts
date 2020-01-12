@@ -13,7 +13,7 @@ import { userModel } from "../../models/userModel";
 export class ActivitiesComponent implements OnInit {
   activities: Activity[];
   isLoggedIn: boolean = false;
-  isValidRole: boolean;
+  isValidRole: boolean; 
 
   constructor(
     private fireService: SYGDatabaseService,

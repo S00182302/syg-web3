@@ -12,4 +12,4 @@ export class AvailabilityComponent implements OnInit {
   ngOnInit() {
   }
 
-}
+} 

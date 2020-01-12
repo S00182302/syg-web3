@@ -16,7 +16,7 @@ describe('CreateBlogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateBlogComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); 
   });
 
   it('should create', () => {

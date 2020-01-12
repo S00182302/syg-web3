@@ -15,7 +15,7 @@ export class BlogComponent implements OnInit {
   isLoggedIn: boolean = false;
   isValidRole: boolean = false;
 
-  constructor(
+  constructor( 
     private fireBaseService: SYGDatabaseService,
     private auth: AuthService,
     public router: Router

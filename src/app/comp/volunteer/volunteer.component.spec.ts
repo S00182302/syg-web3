@@ -11,7 +11,7 @@ describe('VolunteerComponent', () => {
       declarations: [ VolunteerComponent ]
     })
     .compileComponents();
-  }));
+  })); 
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VolunteerComponent);

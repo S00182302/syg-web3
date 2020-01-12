@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   emailInput: string;
   passwordInput: string;
   isForgotPassword: boolean;
-  userDetails: any;
+  userDetails: any; 
 
   constructor(private authService: AuthService, public router: Router) {}
 

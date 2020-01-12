@@ -11,4 +11,4 @@ export interface ProjectCalendar {
     description: string;
     extendendProps: ExtendendProps;
     allDay: boolean;
-}
+} 

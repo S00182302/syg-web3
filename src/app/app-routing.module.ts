@@ -15,7 +15,7 @@ import { ForgotPasswordComponent } from "./comp/forgot-password/forgot-password.
 import { CreateBlogComponent } from "./comp/create-blog/create-blog.component";
 import { CreateActivityComponent } from "./comp/create-activity/create-activity.component"
 
-const routes: Routes = [
+const routes: Routes = [ 
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "home", component: HomeComponent },
   {

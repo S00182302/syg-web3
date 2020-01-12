@@ -473,7 +473,7 @@ export class ProjectsComponent implements OnInit {
       title: this.title.value,
       description: this.description.value,
       extendendProps: {
-        leadVolunteer: this.volunteer.value,
+        leadVolunteer: this.volunteer.value, 
         specialNotes: "Not enabled yet..."
       },
       allDay: this.allDayEvent.value

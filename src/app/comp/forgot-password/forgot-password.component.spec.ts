@@ -16,7 +16,7 @@ describe('ForgotPasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); 
   });
 
   it('should create', () => {
