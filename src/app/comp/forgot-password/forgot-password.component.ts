@@ -16,7 +16,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private authService: AuthService, public router: Router) {}
 
   // Send link on given email to reset password
-  ForgotPassword() {
+  ForgotPassword() { 
     this.authService.sendPasswordResetEmail(this.emailInput).then(
       res => {
         console.log(res);

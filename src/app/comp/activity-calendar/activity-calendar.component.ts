@@ -95,6 +95,7 @@ export class ActivityCalendarComponent implements OnInit {
   }
 
   eventClick(model, content) {
+    console.log(model);
     this.modalTitle = "Date: ";
     this.modalDate = this.getDateOnlyString(model.event.start);
     this.btnText = "Close";
@@ -149,7 +150,7 @@ export class ActivityCalendarComponent implements OnInit {
 
     this.alreadyVolunteered = false;
     for (let i = 0; i < model.event.extendedProps.VolunteerUIDs.length; i++) {
-      if (this.currentUser.UserUID == model.event.extendedProps.VolunteerUIDs) {
+      if (this.currentUser.UserUID == model.event.extendedProps.VolunteerUIDs[i]) {
         this.alreadyVolunteered = true;
       }
     }
@@ -158,8 +159,27 @@ export class ActivityCalendarComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
-          this.closeResult = `Closed with: ${result}`;
-          this.isValidRole = false;
+          switch(result){
+            case "remove":
+              break;
+            case "add":
+              if(!this.alreadyVolunteered){
+                model.event.extendedProps.VolunteerUIDs.push(this.currentUser.UserUID);
+              }
+              let actEvent: ActivityCalendar = {
+                id: model.id,
+                start: model.event.start,
+                end: model.event.end,
+                VolunteerUIDs: model.event.extendedProps.VolunteerUIDs,
+                MemberUIDs: model.event.extendedProps.MemberUIDs
+              };
+              this.svc.updateActivityEvent(actEvent);
+              break;
+            case "close":
+              this.closeResult = `Closed with: ${result}`;
+              this.isValidRole = false;
+              break;
+          }
         },
         reason => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -204,8 +224,14 @@ export class ActivityCalendarComponent implements OnInit {
         .open(content, { ariaLabelledBy: "modal-basic-title" })
         .result.then(
           result => {
-            this.closeResult = `Closed with: ${result}`;
-            this.isValidRole = false;
+            switch(result){
+              case "add":
+                break;
+              case "close":
+                this.closeResult = `Closed with: ${result}`;
+                this.isValidRole = false;
+                break;
+            }
           },
           reason => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -248,3 +274,4 @@ export class ActivityCalendarComponent implements OnInit {
     }
   }
 }
+ 

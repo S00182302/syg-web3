@@ -6,5 +6,5 @@ export interface Volunteer {
   FeaturedImage?: string;
   Age?: number;
   Email?: string;
-  Mobile?: number;
+  Mobile?: number; 
 }

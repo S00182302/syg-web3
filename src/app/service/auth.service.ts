@@ -11,7 +11,7 @@ export class AuthService {
   emailInput: string;
   user: User;
   userLoggedIn: boolean = false;
-  newUserUID: string;
+  newUserUID: string; 
 
   //Subscribing to the Authentication State
   constructor(public afAuth: AngularFireAuth) {

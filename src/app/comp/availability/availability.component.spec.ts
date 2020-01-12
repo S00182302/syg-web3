@@ -11,7 +11,7 @@ describe('AvailabilityComponent', () => {
       declarations: [ AvailabilityComponent ]
     })
     .compileComponents();
-  }));
+  })); 
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AvailabilityComponent);

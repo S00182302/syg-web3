@@ -3,4 +3,4 @@ export interface Activity {
   description?: string;
   imageUrl?: string;
   lastmod?: Date;
-}
+} 
