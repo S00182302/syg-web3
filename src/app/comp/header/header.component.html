@@ -1,4 +1,6 @@
-<nav class="navbar navbar-inverse navbar-toggleable-md fixed-top bg-faded smallNav">
+<nav
+  class="navbar navbar-inverse navbar-toggleable-md fixed-top bg-faded smallNav"
+>
   <img class="main-logo" [src]="logo" alt="logo" />
   <button
     class="navbar-toggler"
@@ -81,13 +83,31 @@
           >PROJECT CALENDAR</a
         >
       </li>
-      
+
       <li class="nav-item">
-        <a class="nav-link" 
-        routerLink="/join">JOIN</a>
+        <a
+          class="nav-link"
+          routerLink="/login"
+          (click)="isCollapsed = !isCollapsed"
+          >LOGIN</a
+        >
       </li>
+
       <li class="nav-item">
-        <a class="nav-link" (click)="LogoutUser()">LOGOUT</a>
+        <a
+          class="nav-link"
+          routerLink="/join"
+          (click)="isCollapsed = !isCollapsed"
+          >JOIN</a
+        >
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a
+          class="nav-link"
+          (click)="LogoutUser()"
+          (click)="isCollapsed = !isCollapsed"
+          >LOGOUT</a
+        >
       </li>
     </ul>
   </div>
@@ -96,12 +116,14 @@
 <nav class="largeNav">
   <!-- Large menu -->
   <img class="main-logo" [src]="logo" alt="logo" />
-  <div *ngIf="isLoggedIn; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock><a class="login-menu" (click)="LogoutUser()">LOGOUT</a></ng-template>
-    <ng-template #elseBlock>
-      <a class="login-menu" routerLink="/login">LOGIN</a>
-      <a class="login-menu" routerLink="/join">JOIN</a>
-    </ng-template>
+  <div *ngIf="isLoggedIn; then thenBlock; else elseBlock"></div>
+  <ng-template #thenBlock
+    ><a class="login-menu" (click)="LogoutUser()">LOGOUT</a></ng-template
+  >
+  <ng-template #elseBlock>
+    <a class="login-menu" routerLink="/login">LOGIN</a>
+    <a class="login-menu" routerLink="/join">JOIN</a>
+  </ng-template>
   <div class="large-menu">
     <ul class="navbar-nav">
       <li ngbLink-item class="nav-item">
@@ -176,7 +198,6 @@
           >PROJECT CALENDAR</a
         >
       </li>
-      
     </ul>
   </div>
 </nav>

@@ -43,6 +43,21 @@
                 <br />
                 <h3>Your Details</h3>
                 <br />
+                <div *ngIf="typeSelect === 'Volunteer'">
+                  <label class="font-weight-bold">Profile Image</label>
+                  <div class="form-label-group">
+                    <input
+                      style="display: none"
+                      type="file"
+                      (change)="onFileChanged($event)"
+                      #fileInput
+                    />
+                    <button (click)="fileInput.click()" class="btn btn-dark">
+                      Select File
+                    </button>
+                  </div>
+                </div>
+                <br />
                 <label>First Name</label>
                 <input
                   class="form-control"
@@ -164,11 +179,20 @@
                       formControlName="contactMobile"
                       autofocus
                     />
-                    <br />
                   </div>
                 </div>
               </div>
-
+              <div *ngIf="typeSelect === 'Volunteer'">
+                <label for="descriptionText" class="font-weight-bold"
+                  >Describe yourself</label
+                >
+                <textarea
+                  class="form-control rounded-0"
+                  id="descriptionText"
+                  rows="3"
+                  formControlName="descriptionText"
+                ></textarea>
+              </div>
               <br />
               <p class="font-weight-bold">
                 Would you be interested in getting involed with Sligo Youth
@@ -291,7 +315,11 @@
               </div>
               <br />
               <br />
-              <button class="btn btn-primary btn-block " (click)="Register()">
+              <button
+                class="btn btn-primary btn-block "
+                (click)="Register()"
+                [disabled]="!registerForm.valid"
+              >
                 Sign Up!
               </button>
 
