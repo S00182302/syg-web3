@@ -1,18 +1,12 @@
 <body>
   <div class="container">
     <div style="width: 100%">
-      <iframe
-        width="100%"
-        height="300"
-        src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=54.27148460000001, -8.4822739&amp;q=1%20kmappagh%20road%2C%20Sligo+(Sligo%20Youth%20Group)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
-        frameborder="0"
-        scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-        ><a href="https://www.maps.ie/coordinates.html"
-          >find my location</a
-        ></iframe
-      >
+      <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+        <agm-marker
+          [latitude]="latitude"
+          [longitude]="longitude"
+          *ngIf="locationChosen"></agm-marker>
+      </agm-map>     
     </div>
     <br />
     <div>
@@ -21,8 +15,8 @@
         1 Somewhere Street<br />
         Sligo<br />
         Tel: 012 345 6789<br />
-        <a href="mailto: sligoyouthgroup@gmail.com "
-          >sligoyouthgroup@gmail.com
+        <a href="mailto: Sligoyg@gmail.com "
+          >Sligoyg@gmail.com
         </a>
       </p>
     </div>
@@ -30,16 +24,17 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Send us a message!</h5>
-            <form class="form-signin">
-              <div class="form-label-group">
+            <h5 class="card-title text-center">Send us a message!</h5>          
+            <form class="form-signin" [formGroup]="myGroup">
+              <div class="form-label-group" >
                 <label>Name</label>
                 <input
                   class="form-control"
                   name="nameInput"
                   placeholder="Your full name"
-                  required
-                  autofocus
+                  formControlName="nameFormControl"
+                 required
+                 autofocus
                 />
               </div>
 
@@ -50,6 +45,7 @@
                   class="form-control"
                   name="emailInput"
                   placeholder="Your email"
+                  formControlName="emailFormControl"
                   required
                   autofocus
                 />
@@ -62,12 +58,17 @@
                   class="form-control"
                   name="messageInput"
                   placeholder="Your message"
+                  formControlName="messageFormControl"
                   required
                   autofocus
                 >
                 </textarea>
               </div>
               <br />
+              
+              <button class="btn btn-primary btn-block text-uppercase"
+              (click)=sendMessage()
+              >
 
               <fieldset>
                 <legend>Are you a member or a volunteer?</legend>
@@ -91,4 +92,5 @@
       </div>
     </div>
   </div>
+</body>
 </body>
