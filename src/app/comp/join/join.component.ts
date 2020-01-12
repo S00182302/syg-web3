@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
 import { userModel } from "src/app/models/userModel";
 import { Router } from "@angular/router";
-import { async } from "rxjs/internal/scheduler/async";
+import { HttpEventType, HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-join",
@@ -12,11 +12,11 @@ import { async } from "rxjs/internal/scheduler/async";
   styleUrls: ["./join.component.css"]
 })
 export class JoinComponent implements OnInit {
-  newUserUID: string;
   constructor(
     private authService: AuthService,
     private sygDB: SYGDatabaseService,
-    public router: Router
+    public router: Router,
+    private http: HttpClient
   ) {}
 
   //Declaring Variables
@@ -26,6 +26,9 @@ export class JoinComponent implements OnInit {
   responseMessageType: string = "";
   newUser: userModel;
   typeSelect: string;
+  newUserUID: string;
+  filename: string;
+  selectedFile: File;
 
   //Array That is being populated by selected activities upon registration
   assistActivities: Array<any> = [];
@@ -84,6 +87,31 @@ export class JoinComponent implements OnInit {
         }
       );
   }
+  //Getting Selected file
+  onFileChanged(event) {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+  }
+
+  //Bretts Code for Uploading Image
+  onUpload() {
+    const uploadData = new FormData();
+    uploadData.append("fileToUpload", this.selectedFile, this.filename); //this.selectedFile.name);
+    this.http
+      .post("https:bretthenning.com/svg/upload.php", uploadData, {
+        reportProgress: true,
+        observe: "events"
+      })
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          console.log(
+            "Upload Progress:  " +
+              Math.round((event.loaded / event.total) * 100) +
+              "%"
+          );
+        }
+      });
+  }
 
   //Pushing the form data to the Database
   async dataPush() {
@@ -99,11 +127,16 @@ export class JoinComponent implements OnInit {
         Hobbies: this.skills.value,
         UserUID: this.newUserUID,
         WeekdaysAttending: this.daysSelected,
-        FeaturedImage: null,
-        Description: null
+        GardaVetting: this.gardaVettting.value,
+        ContactFirstName: this.contactFirstName.value,
+        ContactLastName: this.contactLastName.value,
+        ContactAge: this.contactAge.value,
+        ContactEmailInput: this.contactEmailInput.value,
+        ContactMobile: this.contactMobile.value
       };
       this.sygDB.joinData(this.newUser);
     } else if (this.userType.value == "Volunteer") {
+      this.uploadImage();
       this.newUser = {
         FirstName: this.firstName.value,
         LastName: this.lastName.value,
@@ -115,11 +148,21 @@ export class JoinComponent implements OnInit {
         Hobbies: this.skills.value,
         UserUID: this.newUserUID,
         WeekdaysAttending: this.daysSelected,
-        FeaturedImage: null,
-        Description: null
+        GardaVetting: this.gardaVettting.value,
+        FeaturedImage: "https://bretthenning.com/svg/uploads/" + this.filename,
+        Description: this.descriptionText.value
       };
       this.sygDB.joinData(this.newUser);
     }
+  }
+
+  //Uploading Image for Volunteer
+  uploadImage() {
+    this.filename =
+      new Date().getTime().toString() +
+      this.selectedFile.name.substr(this.selectedFile.name.lastIndexOf("."));
+    console.log(this.filename);
+    this.onUpload();
   }
 
   //Common Method to Error Show Message
@@ -171,6 +214,24 @@ export class JoinComponent implements OnInit {
   get gardaVettting() {
     return this.registerForm.get("gardaVetting");
   }
+  get descriptionText() {
+    return this.registerForm.get("descriptionText");
+  }
+  get contactFirstName() {
+    return this.registerForm.get("contactFirstName");
+  }
+  get contactLastName() {
+    return this.registerForm.get("contactLastName");
+  }
+  get contactAge() {
+    return this.registerForm.get("contactAge");
+  }
+  get contactEmailInput() {
+    return this.registerForm.get("contactEmailInput");
+  }
+  get contactMobile() {
+    return this.registerForm.get("contactMobile");
+  }
 
   //FormGroup to control data validation and data handling
   registerForm = new FormGroup({
@@ -178,16 +239,17 @@ export class JoinComponent implements OnInit {
     firstName: new FormControl("", [Validators.required]),
     lastName: new FormControl("", [Validators.required]),
     age: new FormControl("", [Validators.required]),
-    emailInput: new FormControl("", [Validators.required]),
+    emailInput: new FormControl("", [Validators.required, Validators.email]),
     passwordInput: new FormControl("", [Validators.required]),
     mobile: new FormControl("", [Validators.required]),
+    descriptionText: new FormControl(""),
     involvement: new FormControl("", [Validators.required]),
     skills: new FormControl("", [Validators.required]),
     gardaVetting: new FormControl("", [Validators.required]),
-    contactFirstName: new FormControl("", [Validators.required]),
-    contactLastName: new FormControl("", [Validators.required]),
-    contactAge: new FormControl("", [Validators.required]),
-    contactEmailInput: new FormControl("", [Validators.required]),
-    contactMobile: new FormControl("", [Validators.required])
+    contactFirstName: new FormControl(""),
+    contactLastName: new FormControl(""),
+    contactAge: new FormControl(""),
+    contactEmailInput: new FormControl(""),
+    contactMobile: new FormControl("")
   });
 }
