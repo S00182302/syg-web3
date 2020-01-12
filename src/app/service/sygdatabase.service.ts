@@ -165,6 +165,18 @@ export class SYGDatabaseService {
       );
   }
 
+  updateActivityEvent(event: ActivityCalendar) {
+    this.firestore
+      .collection("Activity")
+      .doc(event.id)
+      .update({
+        start: event.start,
+        VolunteerUIDs: event.VolunteerUIDs,
+        MemberUIDs: event.MemberUIDs,
+        end: event.end
+      });
+  }
+
   getUsers(): Observable<userModel[]> {
     return this.firestore
       .collection("Users")
