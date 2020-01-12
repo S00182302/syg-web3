@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
-import { Blog } from "../../models/blog";
+import { Blog } from "../blog/blog";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
@@ -42,7 +42,7 @@ export class CreateBlogComponent implements OnInit {
       UserID: null,
       lastMod: null,
       projectID: null,
-      publishDate: Date.now()
+      publishDate: null
     };
     this.syg.createBlog(this.createdBlog);
   }
