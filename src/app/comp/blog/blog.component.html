@@ -1,7 +1,16 @@
+<div class="text-center" style="padding-top: 45px;">
+  <h1>Blog / News</h1>
+  <button
+    *ngIf="isLoggedIn && isValidRole"
+    class="btn btn-primary"
+    type="button"
+    (click)="router.navigate(['createblog'])"
+  >
+    Add Blog
+  </button>
+</div>
 <div class="d-flex justify-content-center main">
   <div>
-    <h1>Blog / News</h1>
-    <button *ngIf="isLoggedIn && isValidRole" class="btn-primary addNew" type="button" (click)="router.navigate(['createblog'])" >ADD NEW</button>
     <div *ngFor="let item of items; let i = index">
       <div class="card">
         <img class="card-img-top" src="{{ item.FeaturedImage }}" />

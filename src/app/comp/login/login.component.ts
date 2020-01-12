@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
       res => {
         console.log(res);
         this.ShowMessage("success", "Successfully Logged In!");
-        this.authService.setUser();
         this.IsUserLoggedIn();
         this.router.navigate(["home"]);
       },

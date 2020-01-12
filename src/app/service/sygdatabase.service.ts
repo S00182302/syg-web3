@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Activity } from "../models/activity";
-import { Blog } from "../models/blog";
+import { Activity } from "../comp/activities/activity";
+import { Blog } from "../comp/blog/blog";
 import { ProjectCalendar } from "../models/projectCalendar";
 import { ActivityCalendar } from "../models/activityCalendar";
 import { userModel } from "../models/userModel";
@@ -179,19 +179,5 @@ export class SYGDatabaseService {
           });
         })
       );
-  }
-
-  deleteProject(id: string){
-    this.firestore
-    .collection("ProjectCalendar")
-    .doc(id)
-    .delete();
-  }
-
-  deleteActivity(id: string){
-    this.firestore
-    .collection("Activity")
-    .doc(id)
-    .delete();
   }
 }
