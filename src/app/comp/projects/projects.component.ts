@@ -12,12 +12,11 @@ import { AuthService } from '../../service/auth.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  selector: "app-projects",
+  templateUrl: "./projects.component.html",
+  styleUrls: ["./projects.component.css"]
 })
 export class ProjectsComponent implements OnInit {
-
   calendarPlugins = [dayGridPlugin];
   calendarEvents: ProjectCalendar[];
 
@@ -33,11 +32,11 @@ export class ProjectsComponent implements OnInit {
     multiDayEvent: new FormControl(),
     startDate: new FormControl(),
     endDate: new FormControl(),
-    startTime: new FormControl('',[Validators.required]),
-    endTime: new FormControl('',[Validators.required]),
-    title: new FormControl('',[Validators.required, Validators.minLength(50)]),
-    volunteer: new FormControl('',[Validators.required]),
-    description: new FormControl(),
+    startTime: new FormControl("", [Validators.required]),
+    endTime: new FormControl("", [Validators.required]),
+    title: new FormControl("", [Validators.required, Validators.minLength(50)]),
+    volunteer: new FormControl("", [Validators.required]),
+    description: new FormControl()
   });
 
   allUsers: Observable<userModel[]>;
@@ -61,8 +60,8 @@ export class ProjectsComponent implements OnInit {
 
   options: OptionsInput;
   eventsModel: any;
-  @ViewChild('fullcalendar', {static: false}) fullcalendar: FullCalendarComponent;
-  
+  @ViewChild("fullcalendar", { static: false })
+  fullcalendar: FullCalendarComponent;
 
   ngOnInit() {
     this.svc.getProjectData().subscribe(data => this.calendarEvents = data);
@@ -92,16 +91,16 @@ export class ProjectsComponent implements OnInit {
       editable: true,
       customButtons: {
         myCustomButton: {
-          text: 'custom!',
-          click: function () {
-            alert('clicked the custom button!');
+          text: "custom!",
+          click: function() {
+            alert("clicked the custom button!");
           }
         }
       },
       header: {
-        left: 'dayGridMonth, dayGridWeek',
-        center: 'title',
-        right: 'today, prev, next'
+        left: "dayGridMonth, dayGridWeek",
+        center: "title",
+        right: "today, prev, next"
       },
       plugins: [dayGridPlugin, interactionPlugin]
     };
@@ -218,7 +217,6 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-
   eventDragStop(model) {
     //console.log(model);
   }
@@ -262,7 +260,6 @@ export class ProjectsComponent implements OnInit {
       }
   }
 
-
   dateClick(model, content) {
     this.hasPermission = false;
       this.currentUser.Role.forEach(r => {
@@ -283,34 +280,41 @@ export class ProjectsComponent implements OnInit {
     this.modalDate = model.dateStr;
 
     //time picker
-    this.startTime.setValue({hour: 8, minute: 30});
-    this.endTime.setValue({hour: 9, minute: 30});
+    this.startTime.setValue({ hour: 8, minute: 30 });
+    this.endTime.setValue({ hour: 9, minute: 30 });
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.NewCalendarEvent(model);
-    }, (reason) => {
-      this.resetFormData();
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        result => {
+          this.closeResult = `Closed with: ${result}`;
+          this.NewCalendarEvent(model);
+        },
+        reason => {
+          this.resetFormData();
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
   updateHeader() {
     this.options.header = {
-      left: 'prev,next myCustomButton',
-      center: 'title',
-      right: ''
+      left: "prev,next myCustomButton",
+      center: "title",
+      right: ""
     };
   }
   updateEvents() {
-    this.eventsModel = [{
-      title: 'Updaten Event',
-      start: this.yearMonth + '-08',
-      end: this.yearMonth + '-10'
-    }];
+    this.eventsModel = [
+      {
+        title: "Updaten Event",
+        start: this.yearMonth + "-08",
+        end: this.yearMonth + "-10"
+      }
+    ];
   }
   get yearMonth(): string {
     const dateObj = new Date();
-    return dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1);
+    return dateObj.getUTCFullYear() + "-" + (dateObj.getUTCMonth() + 1);
   }
 
   // Modal controllers
@@ -325,26 +329,26 @@ export class ProjectsComponent implements OnInit {
   */
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
+      return "by pressing ESC";
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
+      return "by clicking on a backdrop";
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
   // Check checkbox values
-  checkMulti(values: any){
+  checkMulti(values: any) {
     this.multiDay = values.currentTarget.checked;
   }
-  checkFullDay(values: any){
+  checkFullDay(values: any) {
     this.fullDay = values.currentTarget.checked;
-    if(this.fullDay){
+    if (this.fullDay) {
       this.endDate.setValue(null);
-    }else{
-      if(this.endTime.value == null){
+    } else {
+      if (this.endTime.value == null) {
         this.endTime.setValue({
-          hour: 10, 
+          hour: 10,
           minute: 30
         });
       }
@@ -355,41 +359,47 @@ export class ProjectsComponent implements OnInit {
   changeVolunteer(e) {
     this.volunteer.setValue(e.target.value, {
       onlySelf: true
-    })
+    });
   }
 
-  NewCalendarEvent(model: any){
-    let sDate = (this.startDate.value == null ? model.dateStr : this.startDate.value );
+  NewCalendarEvent(model: any) {
+    let sDate =
+      this.startDate.value == null ? model.dateStr : this.startDate.value;
     let eDate;
-    if(this.endDate.value == null){
+    if (this.endDate.value == null) {
       // event end on same day
       eDate = sDate;
     } else {
       // event end date provided
       // format date
       let year = this.endDate.value.year;
-      let month = this.endDate.value.month+"";
-      let day = this.endDate.value.day+"";
+      let month = this.endDate.value.month + "";
+      let day = this.endDate.value.day + "";
 
-      month = (month.length < 2 ? "0"+month : month)
-      day = (day.length < 2 ? "0"+day : day)
+      month = month.length < 2 ? "0" + month : month;
+      day = day.length < 2 ? "0" + day : day;
       // assign new format
-      eDate = year+"-"+month+"-"+day;
+      eDate = year + "-" + month + "-" + day;
     }
 
     let newCalendarEvent: ProjectCalendar;
     let start;
     let end;
 
-    if(this.allDayEvent.value)
-    {
-      start = new Date(sDate+"T00:00");
-      end = new Date(sDate+"23:59:59");
-    }
-    else
-    {
-      start = this.getDateTimeFormat(sDate, this.startTime.value.hour, this.startTime.value.minute);
-      end = this.getDateTimeFormat(eDate, this.endTime.value.hour, this.endTime.value.minute);
+    if (this.allDayEvent.value) {
+      start = new Date(sDate + "T00:00");
+      end = new Date(sDate + "23:59:59");
+    } else {
+      start = this.getDateTimeFormat(
+        sDate,
+        this.startTime.value.hour,
+        this.startTime.value.minute
+      );
+      end = this.getDateTimeFormat(
+        eDate,
+        this.endTime.value.hour,
+        this.endTime.value.minute
+      );
     }
 
     newCalendarEvent = {
@@ -398,7 +408,7 @@ export class ProjectsComponent implements OnInit {
       title: this.title.value,
       description: this.description.value,
       extendendProps: {
-        leadVolunteer: this.volunteer.value, 
+        leadVolunteer: this.volunteer.value,
         specialNotes: "Not enabled yet..."
       },
       allDay: this.allDayEvent.value
@@ -407,26 +417,25 @@ export class ProjectsComponent implements OnInit {
     this.resetFormData();
   }
 
-  UpdateProjectEvent(model: any){
+  UpdateProjectEvent(model: any) {
     let sDate;
     let sHour: NgbTimeStruct;
     let sMin: NgbTimeStruct;
-    if(this.startDate.value == null){
+    if (this.startDate.value == null) {
       sDate = this.getDateOnlyString(model.event.start);
       sHour = model.event.start.getHours();
       sMin = model.event.start.getMinutes();
-    }else{
+    } else {
       sDate = this.startDate.value;
       sHour = this.startTime.value.hour;
       sMin = this.startTime.value.minute;
     }
-    
-    
+
     let eDate;
     let eHour: NgbTimeStruct;
     let eMin: NgbTimeStruct;
 
-    if(this.endDate.value == null){
+    if (this.endDate.value == null) {
       // event end on same day
       eDate = sDate;
       eHour = this.endTime.value.hour;
@@ -434,23 +443,25 @@ export class ProjectsComponent implements OnInit {
     } else {
       // event end date provided
       // assign new format
-      eDate = this.getDateOnlyString(new Date(this.endDate.value.year,this.endDate.value.month - 1,this.endDate.value.day));
+      eDate = this.getDateOnlyString(
+        new Date(
+          this.endDate.value.year,
+          this.endDate.value.month - 1,
+          this.endDate.value.day
+        )
+      );
       eHour = this.endTime.value.hour;
       eMin = this.endTime.value.minute;
     }
-    //console.log(this.startTime.value.hour)
-    //console.log(eHour)
+    
     let newCalendarEvent: ProjectCalendar;
     let start;
     let end;
 
-    if(this.allDayEvent.value)
-    {
-      start = new Date(sDate+"T00:00");
-      end = new Date(sDate+"T23:59:59");
-    }
-    else
-    {
+    if (this.allDayEvent.value) {
+      start = new Date(sDate + "T00:00");
+      end = new Date(sDate + "T23:59:59");
+    } else {
       start = this.getDateTimeFormat(sDate, sHour, sMin);
       end = this.getDateTimeFormat(eDate, eHour, eMin);
     }
@@ -462,7 +473,7 @@ export class ProjectsComponent implements OnInit {
       title: this.title.value,
       description: this.description.value,
       extendendProps: {
-        leadVolunteer: this.volunteer.value, 
+        leadVolunteer: this.volunteer.value,
         specialNotes: "Not enabled yet..."
       },
       allDay: this.allDayEvent.value
@@ -472,49 +483,68 @@ export class ProjectsComponent implements OnInit {
     this.resetFormData();
   }
 
+
   deleteEvent(id: string){
     this.svc.deleteProject(id);
     this.resetFormData();
   }
 
   resetFormData(){
+    
     this.form1.reset();
     this.multiDay = false;
     this.fullDay = false;
   }
 
-  getDateTimeFormat(date: string, hour: any, minute: any):Date{
-    hour = (hour.toString().length == 1 ? "0"+hour : hour);
-    minute = (minute.toString().length == 1 ? "0"+minute : minute);
-    let dateString = date+'T'+hour+":"+minute+":00";
+  getDateTimeFormat(date: string, hour: any, minute: any): Date {
+    hour = hour.toString().length == 1 ? "0" + hour : hour;
+    minute = minute.toString().length == 1 ? "0" + minute : minute;
+    let dateString = date + "T" + hour + ":" + minute + ":00";
     return new Date(dateString);
   }
 
   getDateOnlyString(theDate: Date): string {
-    if(theDate != null){
+    if (theDate != null) {
       // format date
       let year = theDate.getFullYear();
       let month = (theDate.getMonth() + 1).toString();
       let day = theDate.getDate().toString();
 
-      month = (month.length < 2 ? "0"+month : month)
-      day = (day.length < 2 ? "0"+day : day)
+      month = month.length < 2 ? "0" + month : month;
+      day = day.length < 2 ? "0" + day : day;
       // assign new format
-      return year+"-"+month+"-"+day;
-    }else{
+      return year + "-" + month + "-" + day;
+    } else {
       return null;
     }
   }
 
   // form data
-  get allDayEvent () { return this.form1.get('allDayEvent')}
-  get multiDayEvent () { return this.form1.get('multiDayEvent')}
-  get startDate () { return this.form1.get('startDate')}
-  get endDate () { return this.form1.get('endDate')}
-  get startTime () { return this.form1.get('startTime')}
-  get endTime () { return this.form1.get('endTime')}
-  get title () { return this.form1.get('title')}
-  get volunteer () { return this.form1.get('volunteer')}
-  get description () { return this.form1.get('description')}
-
+  get allDayEvent() {
+    return this.form1.get("allDayEvent");
+  }
+  get multiDayEvent() {
+    return this.form1.get("multiDayEvent");
+  }
+  get startDate() {
+    return this.form1.get("startDate");
+  }
+  get endDate() {
+    return this.form1.get("endDate");
+  }
+  get startTime() {
+    return this.form1.get("startTime");
+  }
+  get endTime() {
+    return this.form1.get("endTime");
+  }
+  get title() {
+    return this.form1.get("title");
+  }
+  get volunteer() {
+    return this.form1.get("volunteer");
+  }
+  get description() {
+    return this.form1.get("description");
+  }
 }

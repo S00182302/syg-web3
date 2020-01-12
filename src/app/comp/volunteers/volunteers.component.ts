@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
 import { userModel } from "../../models/userModel";
 import { Router } from "@angular/router";
-
+import { Volunteer } from "../../models/volunteer";
 
 @Component({
   selector: "app-volunteers",
@@ -28,6 +28,9 @@ export class VolunteersComponent implements OnInit {
   redirectToSignUp() {
     this._router.navigate(["join"]);
   }
+
+  volunteers: Volunteer[];
+  constructor(private fireService: SYGDatabaseService) {}
 
   ngOnInit() {
     /* // placeholder data
