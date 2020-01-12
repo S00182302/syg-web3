@@ -4,7 +4,6 @@ export interface Activity {
 }
 
 export interface userModel {
-  id?: string;
   FirstName: string;
   LastName: string;
   Age: number;
