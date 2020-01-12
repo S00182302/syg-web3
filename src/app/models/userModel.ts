@@ -4,7 +4,7 @@ export interface Activity {
 }
 
 export interface userModel {
-  ImageURL?: string;
+  id?: string;
   FirstName: string;
   LastName: string;
   Age: number;
