@@ -37,6 +37,17 @@ export class AuthService {
     );
   }
 
+  setUser(){
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.user = user;
+        localStorage.setItem("user", JSON.stringify(this.user));
+      } else {
+        localStorage.setItem("user", null);
+      }
+    });
+  }
+
   //Registering Users
   async register(email: string, pass: string) {
     return await this.afAuth.auth.createUserWithEmailAndPassword(email, pass);

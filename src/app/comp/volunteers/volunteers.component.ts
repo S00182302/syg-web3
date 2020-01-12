@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
-import { Volunteer } from "./Volunteer";
+import { userModel } from "../../models/userModel";
 import { Router } from "@angular/router";
+import { Volunteer } from "../../models/volunteer";
 
 @Component({
   selector: "app-volunteers",
@@ -18,7 +19,7 @@ export class VolunteersComponent implements OnInit {
     "assets/images/carousel/volunteers3.jpg"
   ]);
 
-  volunteers: Volunteer[];
+  volunteers: userModel[] = new Array;
   constructor(
     private fireService: SYGDatabaseService,
     private _router: Router
@@ -29,8 +30,22 @@ export class VolunteersComponent implements OnInit {
   }
 
   ngOnInit() {
+    /* // placeholder data
     this.fireService.GetVolunteers().subscribe(result => {
       this.volunteers = result;
     });
+    */
+
+    this.fireService.getUsers().subscribe(result =>
+      {
+        result.forEach(user => {
+          user.Role.forEach(r => {
+            if(r.toLowerCase() == "volunteer"){
+              this.volunteers.push(user);
+            }
+          });
+        });
+    });
+
   }
 }
