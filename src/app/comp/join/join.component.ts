@@ -11,9 +11,7 @@ import { HttpEventType, HttpClient } from "@angular/common/http";
   templateUrl: "./join.component.html",
   styleUrls: ["./join.component.css"]
 })
-
-export class JoinComponent implements OnInit { 
-  newUserUID: string;
+export class JoinComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private sygDB: SYGDatabaseService,
