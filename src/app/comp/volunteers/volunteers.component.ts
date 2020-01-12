@@ -19,7 +19,7 @@ export class VolunteersComponent implements OnInit {
     "assets/images/carousel/volunteers3.jpg"
   ]);
 
-  volunteers: userModel[] = new Array;
+  volunteers: userModel[] = new Array();
   constructor(
     private fireService: SYGDatabaseService,
     private _router: Router
@@ -36,16 +36,14 @@ export class VolunteersComponent implements OnInit {
     });
     */ 
 
-    this.fireService.getUsers().subscribe(result =>
-      {
-        result.forEach(user => {
-          user.Role.forEach(r => {
-            if(r.toLowerCase() == "volunteer"){
-              this.volunteers.push(user);
-            }
-          });
+    this.fireService.getUsers().subscribe(result => {
+      result.forEach(user => {
+        user.Role.forEach(r => {
+          if (r.toLowerCase() == "volunteer") {
+            this.volunteers.push(user);
+          }
         });
+      });
     });
-
   }
 }

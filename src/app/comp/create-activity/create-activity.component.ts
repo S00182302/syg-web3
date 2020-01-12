@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
-import { AuthService } from "src/app/service/auth.service";
 import { HttpClient, HttpEventType } from "@angular/common/http";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Activity } from "../../models/activity";
