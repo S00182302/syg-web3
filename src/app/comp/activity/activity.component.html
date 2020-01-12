@@ -4,6 +4,6 @@
     <img [src]="activity.imageUrl" [alt]="activity.name" />{{
       activity.description
     }}
-  </p>
+  </p> 
   <button *ngIf="isAdmin" type="button" class="btn btn-outline-dark" (click)="deleteActivity(activity)">Delete</button>
 </div>
