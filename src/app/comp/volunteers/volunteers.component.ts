@@ -29,9 +29,6 @@ export class VolunteersComponent implements OnInit {
     this._router.navigate(["join"]);
   }
 
-  volunteers: Volunteer[];
-  constructor(private fireService: SYGDatabaseService) {}
-
   ngOnInit() {
     /* // placeholder data
     this.fireService.GetVolunteers().subscribe(result => {

@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { Volunteer } from "./../volunteers/volunteer";
+import { Volunteer } from "../../models/volunteer";
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { HttpService } from "../Shared/http.service";
