@@ -11,7 +11,6 @@
 </div>
 <div class="activities main">
   <h1>Activities</h1>
-  <button *ngIf="isLoggedIn && isValidRole" class="btn-primary addNew" type="button" (click)="router.navigate(['createactivity'])" >ADD NEW</button>
   <div *ngFor="let activity of activities">
     <app-activity [activity]="activity"></app-activity>
   </div>

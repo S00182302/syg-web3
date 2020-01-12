@@ -1,4 +1,4 @@
-import { Volunteer } from "./../comp/volunteers/volunteer";
+import { Volunteer } from "../models/volunteer";
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";

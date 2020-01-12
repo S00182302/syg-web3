@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
-import { Volunteer } from "./Volunteer";
+import { Volunteer } from "../../models/volunteer";
 import { Router } from "@angular/router";
 
 @Component({
@@ -32,7 +32,6 @@ export class VolunteersComponent implements OnInit {
     this.fireService.GetVolunteers().subscribe(result => {
       this.volunteers = result;
     });
-    */
 
     this.fireService.getUsers().subscribe(result => {
       result.forEach(user => {

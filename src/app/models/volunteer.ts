@@ -1,10 +1,10 @@
 export interface Volunteer {
-  id: string;
+  id?: string;
   Name?: string;
   Hobbys?: string;
   Description?: string;
   FeaturedImage?: string;
   Age?: number;
   Email?: string;
-  Mobile?: number;
+  Mobile?: string;
 }
