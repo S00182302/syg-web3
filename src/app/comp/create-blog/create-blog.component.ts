@@ -42,7 +42,7 @@ export class CreateBlogComponent implements OnInit {
       UserID: null,
       lastMod: null,
       projectID: null,
-      publishDate: Date.now()
+      publishDate: null
     };
     this.syg.createBlog(this.createdBlog);
   }
