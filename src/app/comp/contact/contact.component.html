@@ -1,18 +1,17 @@
 <body>
   <div class="container">
     <div style="width: 100%">
-      <iframe
-        width="100%"
-        height="300"
-        src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=54.27148460000001, -8.4822739&amp;q=1%20kmappagh%20road%2C%20Sligo+(Sligo%20Youth%20Group)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
-        frameborder="0"
-        scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-        ><a href="https://www.maps.ie/coordinates.html"
-          >find my location</a
-        ></iframe
+      <agm-map
+        [latitude]="latitude"
+        [longitude]="longitude"
+        (mapClick)="onChoseLocation($event)"
       >
+        <agm-marker
+          [latitude]="latitude"
+          [longitude]="longitude"
+          *ngIf="locationChosen"
+        ></agm-marker>
+      </agm-map>
     </div>
     <br />
     <div>
@@ -21,9 +20,7 @@
         1 Somewhere Street<br />
         Sligo<br />
         Tel: 012 345 6789<br />
-        <a href="mailto: sligoyouthgroup@gmail.com "
-          >sligoyouthgroup@gmail.com
-        </a>
+        <a href="mailto: Sligoyg@gmail.com ">Sligoyg@gmail.com </a>
       </p>
     </div>
     <div class="row">
@@ -31,13 +28,14 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Send us a message!</h5>
-            <form class="form-signin">
+            <form class="form-signin" [formGroup]="myGroup">
               <div class="form-label-group">
                 <label>Name</label>
                 <input
                   class="form-control"
                   name="nameInput"
                   placeholder="Your full name"
+                  formControlName="nameFormControl"
                   required
                   autofocus
                 />
@@ -50,6 +48,7 @@
                   class="form-control"
                   name="emailInput"
                   placeholder="Your email"
+                  formControlName="emailFormControl"
                   required
                   autofocus
                 />
@@ -62,27 +61,52 @@
                   class="form-control"
                   name="messageInput"
                   placeholder="Your message"
+                  formControlName="messageFormControl"
                   required
                   autofocus
                 >
                 </textarea>
               </div>
               <br />
-
-              <fieldset>
-                <legend>Are you a member or a volunteer?</legend>
-                <label>
-                  <input type="radio" name="morv" value="yes" />
-                  Yes
-                </label>
-
-                <label>
-                  <input type="radio" name="morv" value="no" />
-                  No
-                </label>
-              </fieldset>
-              <button class="btn btn-primary btn-block text-uppercase">
-                Send
+              <p class="font-weight-bold">
+                Are you a member of volunteer
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline1"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  value="Member"
+                />
+                <label class="custom-control-label" for="customRadioInline1"
+                  >Member</label
+                >
+              </div>
+              <p></p>
+              <p>or</p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline2"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  value="Volunteer"
+                />
+                <label class="custom-control-label" for="customRadioInline2"
+                  >Volunteer</label
+                >
+              </div>
+              <br />
+              <br />
+              <button
+                class="btn btn-primary btn-block text-uppercase"
+                (click)="sendMessage()"
+                type="submit"
+              >
+                Send Message
               </button>
               <br />
             </form>

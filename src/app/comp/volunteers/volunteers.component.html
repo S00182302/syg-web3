@@ -1,64 +1,55 @@
 <div class="c-wrapper main">
-        <div class="top">
-                <h1>Volunteers</h1>
-                
-            </div>
-<ngb-carousel *ngIf="images">
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img [src]="volunteers1" alt="PROJECT NAME 1">
-           
-          </div>
-          <div class="carousel-caption">
-            <h3>PROJECT NAME 1</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </div>
-        </ng-template>
-
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img [src]="volunteers2" alt="PROJECT NAME 2">
-          </div>
-          <div class="carousel-caption">
-            <h3>PROJECT NAME 2</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </ng-template>
-
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img [src]="volunteers3" alt="PROJECT NAME 3">
-          </div>
-          <div class="carousel-caption">
-            <h3>PROJECT NAME 3</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-          </div>
-        </ng-template>
-
-      </ngb-carousel> 
-
-      <div class="card" id="card1" style="width: 18rem;">
-            <div *ngFor="let volunteer of volunteers" >
-              <app-volunteer [volunteer]="volunteer"></app-volunteer>
-            </div>
+  <div class="top">
+    <h1>Volunteers</h1>
+  </div>
+  <ngb-carousel *ngIf="images">
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="volunteers1" alt="PROJECT NAME 1" />
       </div>
-
-
-      <div class="card" id="card2">
-          <h5 class="card-header">Our Team</h5>
-          <div class="card-body">
-            <h5 class="card-title">Sligo Youth Group Volunteers </h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text below as a natural </p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text below as a natural</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          </div>
+      <div class="carousel-caption">
+        <h3>PROJECT NAME 1</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
-      <div class="clearfix"></div>
-      <button class="btn-primary" type="button">JOIN</button>
+    </ng-template>
 
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="volunteers2" alt="PROJECT NAME 2" />
+      </div>
+      <div class="carousel-caption">
+        <h3>PROJECT NAME 2</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+    </ng-template>
+
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="volunteers3" alt="PROJECT NAME 3" />
+      </div>
+      <div class="carousel-caption">
+        <h3>PROJECT NAME 3</h3>
+        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+
+  <div class="card mx-auto" id="card1">
+    <div *ngFor="let volunteer of volunteers">
+      <app-volunteer [volunteer]="volunteer"></app-volunteer>
     </div>
+  </div>
+  <br />
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <button
+          class="btn btn-primary btn-lg btn-block"
+          (click)="redirectToSignUp()"
+        >
+          Join
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

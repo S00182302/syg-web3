@@ -29,7 +29,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { CountUpModule } from "countup.js-angular2";
 import { ForgotPasswordComponent } from "./comp/forgot-password/forgot-password.component";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from "@angular/common/http";
 
 import { FlatpickrModule } from "angularx-flatpickr";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
@@ -38,7 +38,9 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { FullCalendarModule } from "@fullcalendar/angular";
-import { CreateActivityComponent } from './comp/create-activity/create-activity.component';
+import { CreateActivityComponent } from "./comp/create-activity/create-activity.component";
+import { AgmCoreModule } from "@agm/core";
+import { HttpService } from "./comp/Shared/http.service";
 
 @NgModule({
   declarations: [
@@ -70,12 +72,21 @@ import { CreateActivityComponent } from './comp/create-activity/create-activity.
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    ReactiveFormsModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     CountUpModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
+    HttpClientModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyBB4edoQPLP5vMNXB5Bjt4Nj1PWjtzCNh0"
+    }),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -83,7 +94,7 @@ import { CreateActivityComponent } from './comp/create-activity/create-activity.
     BrowserAnimationsModule,
     FullCalendarModule
   ],
-  providers: [AngularFireAuth],
+  providers: [HttpService, AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
