@@ -1,25 +1,24 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center main">
   <div>
+    <h1>Blog / News</h1>
+    <button *ngIf="isLoggedIn && isValidRole" class="btn-primary addNew" type="button" (click)="router.navigate(['createblog'])" >ADD NEW</button>
     <div *ngFor="let item of items; let i = index">
       <div class="card">
-        <img
-          class="card-img-top"
-          src="{{ item.payload.doc.data().FeaturedImage }}"
-        />
+        <img class="card-img-top" src="{{ item.FeaturedImage }}" />
         <div class="card-body">
-          <h5 class="card-title">{{ item.payload.doc.data().Title }}</h5>
+          <h5 class="card-title">{{ item.Title }}</h5>
           <p>
             <button
               type="button"
               class="btn btn-dark"
               (click)="isCollapsed[i] = !isCollapsed[i]"
             >
-              Read More
+              Read More 
             </button>
           </p>
           <div [ngbCollapse]="!isCollapsed[i]">
             <p class="card-text">
-              {{ item.payload.doc.data().Content }}
+              {{ item.Content }}
             </p>
           </div>
         </div>

@@ -1,95 +1,74 @@
-/* Header */
-nav {
-    background-color: #fff;
-    box-shadow: 0px 2px 9px;
-}
-.nav-spacer{
-    min-height: 60px;
-}
-.main-logo {
-    width: 200px;
-}
-.hamburger {
-    position: relative;
-    display: inline-block;
-    width: 1.25em;
-    height: 0.8em;
-    border-top: 0.2em solid #707070;
-    border-bottom: 0.2em solid #707070;
-}
-.hamburger:before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 0px;
-    width: 100%;
-    border-top: 0.2em solid #707070;
-}
-.small-menu{
-    position: absolute;
-    width: 75%;
-    background-color: #707070;
-    top: 0;
-    left: 0;
-}
-.small-menu ul{
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
+.main {
+    max-width: 1170px;
+    margin: 0 auto;
     padding: 20px;
 }
-.small-menu ul li{
-    color: #fff;
-}
-.small-menu ul li a,
-.small-menu ul li a:link{
-    color: #fff;
-}
-
-
-/*footer*/
-footer {
-    margin-top: 20px;
-    background-color: #505050;
-    text-align: center;
-    color: #fff;
-}
-.footer-address,
-.footer-copyright {
-    padding: 10px;
-}
-.social-icons img{
-    width: 15%;
-    margin: 2.5%;
-}
-/* Global css */
 .main h1 {
     display: inline-block;
     padding: 0 0 0 20px;
-    margin: 0;
+    margin: 20px 0;
 }
-
-
-/* home page */
-.home .featuredImg {
-    width: 100%;
-}
-.home .top{
-    padding: 10px;
-}
-.home .top h1{
-    width: 50%;
-}
-.home .top button{
-    width: 45%;
+button{ 
+    width: initial;
     font-size: 1.4em;
-    padding: 10px 0;
     border-radius: 10px;
-}
-.home .content {
-    padding: 20px;
-    text-align: justify;
+    padding: 5px 60px;
 }
 
-/* project calendar */
-.projects .content {
-    padding: 20px;
-    text-align: justify;
+.left {
+    float: left;
+}
+.right{
+    float: right;
+}
+.clear{
+    clear: both;
+}
+
+#allDayEvent,
+#multiDayEvent {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+}
+
+#allDayEventLabel span,
+#multiDayEventLabel span{
+    vertical-align: super;
+}
+
+.dates-times{
+    margin-bottom: 10px;
+}
+
+.times {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* activity Calendar */
+.activityCalendar .fc-mon,
+.activityCalendar .fc-wed,
+.activityCalendar .fc-fri { 
+    background-color: #d2f8d2; 
+} 
+
+.activityCalendar .fc-event{
+    padding: 20px 5px;
+}
+
+.modal-li {
+    margin-left: 20px;
+}
+
+.addNew {
+    clear: both;
+    float: right;
+    border-radius: 5px;
+    margin-right: 20px;
 }

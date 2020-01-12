@@ -1,0 +1,11 @@
+.projects .content {
+    padding: 20px;
+    text-align: justify;
+}
+.modal-title{
+    width: 100%;
+}
+.modal-title span{
+    float: right;
+    margin-right: 16px;
+} 

@@ -1,0 +1,13 @@
+.c-wrapper {
+  width: 95%;
+  margin: auto;
+}
+ngb-carousel {
+  margin-bottom: 30px;
+}
+ngb-carousel img {
+  margin: 0 auto; /*important */
+  max-width: none; /*important */
+  min-width: 100%;
+}
+ 

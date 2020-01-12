@@ -1,1 +1,118 @@
-<p>contact works!</p>
+<body>
+  <div class="container">
+    <div style="width: 100%">
+      <agm-map
+        [latitude]="latitude"
+        [longitude]="longitude"
+        (mapClick)="onChoseLocation($event)"
+      >
+        <agm-marker
+          [latitude]="latitude"
+          [longitude]="longitude"
+          *ngIf="locationChosen"
+        ></agm-marker>
+      </agm-map>
+    </div>
+    <br /> 
+    <div>
+      <p>
+        Sligo Youth Group<br />
+        1 Somewhere Street<br />
+        Sligo<br />
+        Tel: 012 345 6789<br />
+        <a href="mailto: Sligoyg@gmail.com ">Sligoyg@gmail.com </a>
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Send us a message!</h5>
+            <form class="form-signin" [formGroup]="myGroup">
+              <div class="form-label-group">
+                <label>Name</label>
+                <input
+                  class="form-control"
+                  name="nameInput"
+                  placeholder="Your full name"
+                  formControlName="nameFormControl"
+                  required
+                  autofocus
+                />
+              </div>
+
+              <br />
+              <label>Email</label>
+              <div class="form-label-group">
+                <input
+                  class="form-control"
+                  name="emailInput"
+                  placeholder="Your email"
+                  formControlName="emailFormControl"
+                  required
+                  autofocus
+                />
+              </div>
+              <br />
+
+              <label>Message</label>
+              <div class="form-label-group">
+                <textarea
+                  class="form-control"
+                  name="messageInput"
+                  placeholder="Your message"
+                  formControlName="messageFormControl"
+                  required
+                  autofocus
+                >
+                </textarea>
+              </div>
+              <br />
+              <p class="font-weight-bold">
+                Are you a member of volunteer
+              </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline1"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  value="Member"
+                />
+                <label class="custom-control-label" for="customRadioInline1"
+                  >Member</label
+                >
+              </div>
+              <p></p>
+              <p>or</p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline2"
+                  name="userType"
+                  formControlName="userType"
+                  class="custom-control-input"
+                  value="Volunteer"
+                />
+                <label class="custom-control-label" for="customRadioInline2"
+                  >Volunteer</label
+                >
+              </div>
+              <br />
+              <br />
+              <button
+                class="btn btn-primary btn-block text-uppercase"
+                (click)="sendMessage()"
+                type="submit"
+              >
+                Send Message
+              </button>
+              <br />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

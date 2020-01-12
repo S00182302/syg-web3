@@ -1,6 +1,136 @@
 <div class="projects main">
     <h1>Projects Calendar</h1>
-    <iframe id="iframe" src="https://outlook.live.com/owa/calendar/00000000-0000-0000-0000-000000000000/13f1b982-bc56-442d-8505-e157ececfd7c/cid-BA42359FAC82EE08/index.html"
-     scrolling="no" width="100%" height="700"  frameborder="0"></iframe>
+    <full-calendar
+        *ngIf="options"
+        #fullcalendar
+
+        defaultView="dayGridMonth"
+        [weekends]="true"
+        [events]="calendarEvents"
+        
+        [displayEventTime]="false"
+        [editable]="true"
+        [header]="options.header" 
+        [customButtons]="options.customButtons"
+        (dateClick)="dateClick($event, content)"
+        (eventDragStop)="eventDragStop($event)"
+        (eventDrop)="eventDrop($event)"
+        [plugins]="options.plugins"
+        (eventClick)="eventClick($event, content)"
+        ></full-calendar>
+
+        <ng-template #content let-modal>
+            <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{modalTitle}} <span>{{modalDate}}</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="hasPermission">
+                    <form [formGroup]="form1" > 
+                        <div class="form-group">
+        
+                            <div class="dates-times">
+        
+                                <label *ngIf="!multiDay" id="allDayEventLabel">
+                                    <input type="checkbox" id="allDayEvent" formControlName="allDayEvent" class="form-control" (change)="checkFullDay($event)" /><span>All day event</span></label>
+                                    <br />
+            
+                                <label *ngIf="!fullDay" id="multiDayEventLabel">
+                                    <input type="checkbox" id="multiDayEvent" formControlName="multiDayEvent" class="form-control" (change)="checkMulti($event)" /><span>Multiple day event</span></label>
+                                    <br />
+                                
+                                <div *ngIf="!fullDay" class="col-4 times">
+                                    <label>Start Time</label>
+                                    <ngb-timepicker formControlName="startTime"></ngb-timepicker>
+                                </div>
+                                <div *ngIf="!fullDay" class="col-2 times"></div>
+        
+                                <div *ngIf="!fullDay || multiDay"  class="col-4 times">
+                                    <label>End Time</label>
+                                    <ngb-timepicker formControlName="endTime"></ngb-timepicker>
+                                </div>
+        
+                                <div *ngIf="multiDay">
+                                    <label for="endDateSelect">End Date</label>
+                                    <div class="input-group">
+                                        <input id="endDateSelect" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate" ngbDatepicker #dp="ngbDatepicker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div *ngIf="startTime.invalid && (startTime.touched || startTime.dirty)" class="alert alert-danger clear">
+                                    <div *ngIf="startTime.hasError('required')">Start time is required</div>
+                                </div>
+                                <div *ngIf="endTime.invalid && (endTime.touched || endTime.dirty)" class="alert alert-danger clear">
+                                    <div *ngIf="endTime.hasError('required')">End time is required</div>
+                                </div>
+        
+                            </div>
+        
+                            <div class="project-details clear">
+        
+                                <label>Title</label>
+                                <div class="input-group">
+                                    <input id="title" formControlName="title" class="form-control" placeholder="Title">
+                                </div>
+        
+                                <label>Project Leader</label>
+                                <div class="input-group">
+                                    <select class="form-control" (change)="changeVolunteer($event)" formControlName="volunteer">
+                                        <option value="" disabled >Select a volunteer</option>
+                                        <option *ngFor="let volunteer of volunteers" [value]="volunteer.id" >{{volunteer.FirstName}} {{volunteer.LastName}}</option>
+                                     </select>
+                                </div>
+        
+                                <div class="clear">
+                                    <label>Description</label>
+                                    <div class="input-group">
+                                        <textarea id="description" formControlName="description" class="form-control" placeholder="Description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div *ngIf="!hasPermission">
+                    <div class="project-details clear">
+
+                        <p>Title: {{mTitle}}</p>
+                        <p>Project Leader: {{mProLeader}}</p>
+                        <p>Description: {{mDescription}}</p>
+                        <div *ngIf="allDay">
+                            <p>All day event</p>
+                        </div>
+                        <div *ngIf="!allDay && !multiDay">
+                            <p>Start Time: {{mStartTime}}</p>
+                            <p>End Time: {{mEndTime}}</p>
+                        </div>
+                        <div *ngIf="multiDay">
+                            <p>Start Date: &nbsp; {{mStartDate}}</p>
+                            <p>Start Time: {{mStartTime}}</p>
+                            <p>End Date:   &nbsp;&nbsp; {{mEndDate}}</p>
+                            <p>End Time: {{mEndTime}}</p>
+                        </div>
+                            
+                    </div>
+                </div>
+
+            
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="isEventOwner" type="button" class="btn btn-outline-dark" (click)="modal.close('Delete click')">Delete</button>
+                <button *ngIf="hasPermission" type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+                <button *ngIf="!hasPermission" type="button" class="btn btn-outline-dark" (click)="modal.close('close click')">Save</button>
+            </div>
+        </ng-template>
+          
+          
+          
+          <hr>
 </div>
 

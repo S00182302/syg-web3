@@ -1,4 +1,10 @@
 <div class="activity-article">
-    <h3>{{activity.name}}</h3>
-    <p><img [src]="activity.imageUrl" [alt]="activity.name">{{activity.description}}</p>
+  <h3>{{ activity.name }}</h3>
+  <p>
+    <img [src]="activity.imageUrl" [alt]="activity.name" />{{
+      activity.description
+    }}
+  </p> 
+  <button *ngIf="isAdmin" type="button" class="btn btn-outline-dark" (click)="deleteActivity(activity)">Delete</button>
 </div>
+ 

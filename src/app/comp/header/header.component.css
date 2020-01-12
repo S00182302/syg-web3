@@ -1,0 +1,142 @@
+.hidden {
+    display: none;
+}
+.large-menu ul li {
+    display: inline-block;
+    margin: 10px;
+}
+.large-menu .nav-link {
+    display: inline-block;
+}
+.large-menu .navbar-nav {
+    flex-direction: row;
+}
+
+nav {
+    background-color: #fff;
+    box-shadow: 0px 2px 9px;
+} 
+.nav-spacer{
+    min-height: 10px;
+}
+.main-logo {
+    width: 200px;
+}
+.navbar-toggler{
+    float: right;
+}
+.hamburger {
+    position: relative;
+    display: inline-block;
+    width: 1.25em;
+    height: 0.8em;
+    border-top: 0.2em solid #707070;
+    border-bottom: 0.2em solid #707070;
+}
+.hamburger:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0px;
+    width: 100%;
+    border-top: 0.2em solid #707070;
+}
+.small-menu{
+    position: absolute;
+    width: 250px;
+    background-color: #707070;
+    top: 0;
+    left: 0;
+}
+.small-menu ul{
+    padding: 20px;
+}
+.small-menu ul li{
+    color: #fff;
+}
+.small-menu ul li a,
+.small-menu ul li a:link{
+    color: #fff;
+}
+.large-menu ul{
+    margin: 0 auto;
+    max-width: 1050px;
+}
+.large-menu ul li{
+    color: #555;
+}
+.large-menu ul li a,
+.large-menu ul li a:link{
+    color: #555;
+    padding: 5px 15px;
+}
+.large-menu ul li a:hover{
+    background-color: #555;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.large-menu .active{
+    background-color: #555;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.large-menu ul li .active,
+.large-menu ul li .active:link{
+    color: #fff;
+}
+.login-menu {
+    float: right;
+    margin-top: 40px;
+    margin-right: 40px;
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.largeNav {
+    display: none;
+}
+.smallNav {
+    display: block;
+}
+.large-menu ul li{
+    margin: 10px  1px;
+}
+.large-menu ul{
+    margin-right: 10px;
+}
+
+
+@media screen and (min-width: 769px) {
+    .main-logo {
+        width: 400px;
+        padding:  20px 0 0 40px;
+    }
+    .smallNav {
+        display: none;
+    }
+    .largeNav {
+        display: block;
+    }
+    .nav-link  {
+        font-size: 14px;
+    }
+    .large-menu ul li a,
+    .large-menu ul li a:link{
+        color: #555;
+        padding: 5px 10px;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    .nav-link  {
+        font-size: 16px;
+    }
+    .large-menu ul li a,
+    .large-menu ul li a:link{
+        color: #555;
+        padding: 5px 15px;
+    }
+  }

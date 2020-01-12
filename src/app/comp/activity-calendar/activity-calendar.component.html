@@ -1,1 +1,67 @@
-<p>activity-calendar works!</p>
+<div class="activityCalendar main">
+  <h1>Projects Calendar</h1>
+  <full-calendar
+    *ngIf="options"
+    #fullcalendar
+    defaultView="dayGridMonth"
+    [weekends]="false"
+    [events]="calendarEvents"
+    [displayEventTime]="false"
+    [editable]="true"
+    [header]="options.header"
+    [customButtons]="options.customButtons"
+    (dateClick)="dateClick($event, content)"
+    (eventClick)="eventClick($event, content)"
+    [plugins]="options.plugins"
+  ></full-calendar>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ modalTitle }} <span>{{ modalDate }}</span>
+      </h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Activities: <br />
+      <div *ngFor="let act of ActivityList">
+        <li class="modal-li">{{ act }}</li>
+      </div>
+      Volunteers: <br />
+      <div *ngFor="let person of VolunteerList">
+        <li class="modal-li">{{ person }}</li>
+      </div>
+    </div>
+    <div *ngIf="isValidRole" class="modal-body">
+      <div *ngIf="alreadyVolunteered">
+        <p>No longer able to volunteer for this date?</p>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('remove')">Remove me!</button
+        ><span style="margin-right: 20px;"></span>
+      </div>
+
+      <div *ngIf="!alreadyVolunteered">
+        <p>Volunteer for this date?</p>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('add')" >Volunteer me!</button
+        ><span style="margin-right: 20px;"></span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark" 
+        (click)="modal.close('close')"
+      >
+        {{ btnText }}
+      </button>
+    </div>
+  </ng-template>
+
+  <hr />
+</div>

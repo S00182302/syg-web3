@@ -1,1 +1,61 @@
-<p>create-blog works!</p>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-10 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Create A Blog</h3>
+            <form class="createBlog" [formGroup]="createABlogForm">
+              <div>
+                <label class="font-weight-bold">Title:</label>
+                <div class="form-label-group">
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    placeholder="Title"
+                    formControlName="title" 
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <label class="font-weight-bold">Image URL:</label>
+                  <div class="form-label-group">
+                    <input
+                      type="text"
+                      name="imageURL"
+                      class="form-control"
+                      placeholder="Image URL"
+                      formControlName="imageURL"
+                      required
+                    />
+                  </div>
+                </div>
+                <br />
+                <label for="content" class="font-weight-bold"
+                  >Description:</label
+                >
+                <textarea
+                  class="form-control rounded-0"
+                  id="content"
+                  rows="3"
+                  formControlName="content"
+                ></textarea>
+              </div>
+              <br />
+              <button
+                type="button"
+                class="btn btn-dark"
+                (click)="createBlog()"
+                (click)="router.navigate(['blog'])"
+              >
+                Create Blog
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

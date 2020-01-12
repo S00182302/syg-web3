@@ -1,0 +1,10 @@
+.volunteer-article{
+    margin: 20px;
+}
+@media screen and (min-width: 769px) {
+  .card-img-top {
+      width: 200px;
+      float: left;
+      margin-right: 20px;
+  }
+} 

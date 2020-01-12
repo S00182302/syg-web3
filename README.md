@@ -1,28 +1,48 @@
-# SygWeb3
+<h1 align="center">Welcome to Sligo Youth Group Web Page Repo👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/hignz/whensitdue#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/hignz/whensitdue/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
+### 🏠 [Homepage](https://github.com/S00182302/syg-web3/tree/DevBranch)
 
-## Development server
+## Install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```sh
+npm install
+```
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+npm run start
+```
 
-## Build
+## Run tests
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```sh
+npm run test
+```
 
-## Running unit tests
+## Author
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+👤 **Brett Henning, Mark Walsh, Maria Severin**
 
-## Running end-to-end tests
+* Github: [@BrettHenning](https://github.com/S00182302)
+* Github: [@Markw1998](https://github.com/Markw1998)
+* Github: [@S00201400](https://github.com/S00201400)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## 🤝 Contributing
 
-## Further help
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/S00182302/syg-web3/issues).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-# syg-web3
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+***
