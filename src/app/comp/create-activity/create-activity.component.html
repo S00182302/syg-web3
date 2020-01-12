@@ -6,53 +6,33 @@
           <div class="card-body">
             <h3 class="card-title text-center">Create Activity</h3>
 
-                        <form class="createActivity" [formGroup]="activityForm">
-                            <div>
-                            <label class="font-weight-bold">Title:</label>
-                            <div class="form-label-group">
-                                <input
-                                type="text"
-                                name="title"
-                                class="form-control"
-                                placeholder="Title"
-                                formControlName="title" 
-                                required
-                                />
-                            </div>
-                            <br />
-                            <div>
-                                <label class="font-weight-bold">Image URL:</label>
-                                <div class="form-label-group">
-                                    <input
-                                    style="display: none"
-                                    type="file" (change)="onFileChanged($event)"
-                                    #fileInput>
-                                  <button (click)="fileInput.click()" class="btn btn-dark">Select File</button>
-                                </div>
-                            </div>
-                            <br />
-                            <label for="content" class="font-weight-bold"
-                                >Description:</label
-                            >
-                            <textarea
-                                class="form-control rounded-0"
-                                id="content"
-                                rows="3"
-                                formControlName="content"
-                            ></textarea>
-                            </div>
-                            <br />
-                            <button
-                            type="button"
-                            class="btn btn-dark"
-                            (click)="createActivity()"
-                            (click)="router.navigate(['activities'])"
-                            >
-                            Create Activity
-                            </button>
-                        </form>
-
-                    </div>
+            <form class="createActivity" [formGroup]="activityForm">
+              <div>
+                <label class="font-weight-bold">Title:</label>
+                <div class="form-label-group">
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    placeholder="Title"
+                    formControlName="title"
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <label class="font-weight-bold">Image URL:</label>
+                  <div class="form-label-group">
+                    <input
+                      style="display: none"
+                      type="file"
+                      (change)="onFileChanged($event)"
+                      #fileInput
+                    />
+                    <button (click)="fileInput.click()" class="btn btn-dark">
+                      Select File
+                    </button>
+                  </div>
                 </div>
                 <br />
                 <label for="content" class="font-weight-bold"
