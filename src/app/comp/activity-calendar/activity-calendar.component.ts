@@ -158,8 +158,24 @@ export class ActivityCalendarComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
-          this.closeResult = `Closed with: ${result}`;
-          this.isValidRole = false;
+          switch(result){
+            case "remove":
+              break;
+            case "add":
+              let actEvent: ActivityCalendar = {
+                id: model.id,
+                start: model.event.start,
+                end: model.event.end,
+                VolunteerUIDs: model.event.extendedProps.VolunteerUIDs,
+                MemberUIDs: model.event.extendedProps.MemberUIDs
+              };
+              this.svc.updateActivityEvent(actEvent);
+              break;
+            case "close":
+              this.closeResult = `Closed with: ${result}`;
+              this.isValidRole = false;
+              break;
+          }
         },
         reason => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -204,8 +220,14 @@ export class ActivityCalendarComponent implements OnInit {
         .open(content, { ariaLabelledBy: "modal-basic-title" })
         .result.then(
           result => {
-            this.closeResult = `Closed with: ${result}`;
-            this.isValidRole = false;
+            switch(result){
+              case "add":
+                break;
+              case "close":
+                this.closeResult = `Closed with: ${result}`;
+                this.isValidRole = false;
+                break;
+            }
           },
           reason => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

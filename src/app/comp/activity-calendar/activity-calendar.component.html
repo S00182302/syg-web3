@@ -42,13 +42,13 @@
     <div *ngIf="isValidRole" class="modal-body">
       <div *ngIf="alreadyVolunteered">
         <p>No longer able to volunteer for this date?</p>
-        <button type="button" class="btn btn-outline-dark">Remove me!</button
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('remove')">Remove me!</button
         ><span style="margin-right: 20px;"></span>
       </div>
 
       <div *ngIf="!alreadyVolunteered">
         <p>Volunteer for this date?</p>
-        <button type="button" class="btn btn-outline-dark">Volunteer me!</button
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('add')" >Volunteer me!</button
         ><span style="margin-right: 20px;"></span>
       </div>
     </div>
@@ -64,6 +64,4 @@
   </ng-template>
 
   <hr />
-
-  <pre>{{ closeResult }}</pre>
 </div>
