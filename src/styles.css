@@ -67,6 +67,7 @@ button{
 }
 
 .addNew {
+    clear: both;
     float: right;
     border-radius: 5px;
     margin-right: 20px;

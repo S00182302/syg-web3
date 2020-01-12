@@ -180,4 +180,18 @@ export class SYGDatabaseService {
         })
       );
   }
+
+  deleteProject(id: string){
+    this.firestore
+    .collection("ProjectCalendar")
+    .doc(id)
+    .delete();
+  }
+
+  deleteActivity(id: string){
+    this.firestore
+    .collection("Activity")
+    .doc(id)
+    .delete();
+  }
 }

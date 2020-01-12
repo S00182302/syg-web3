@@ -62,7 +62,7 @@ export class ActivityCalendarComponent implements OnInit {
     this.svc.getUsers().subscribe(data => 
       {
         data.forEach(element => {
-          for(let i = 0; i<element.Role.length; i++){
+          for(let i = 0; i < element.Role.length; i++){
             if(element.Role[i] == "Volunteer"){
               this.users.push(element);
             }

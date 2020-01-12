@@ -68,8 +68,12 @@ nav {
 .large-menu ul li a,
 .large-menu ul li a:link{
     color: #555;
-    padding: 5x;
     padding: 5px 15px;
+}
+.large-menu ul li a:hover{
+    background-color: #555;
+    border-radius: 5px;
+    color: #fff;
 }
 
 .large-menu .active{
@@ -97,6 +101,13 @@ nav {
 .smallNav {
     display: block;
 }
+.large-menu ul li{
+    margin: 10px  1px;
+}
+.large-menu ul{
+    margin-right: 10px;
+}
+
 
 @media screen and (min-width: 769px) {
     .main-logo {
@@ -108,5 +119,24 @@ nav {
     }
     .largeNav {
         display: block;
+    }
+    .nav-link  {
+        font-size: 14px;
+    }
+    .large-menu ul li a,
+    .large-menu ul li a:link{
+        color: #555;
+        padding: 5px 10px;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    .nav-link  {
+        font-size: 16px;
+    }
+    .large-menu ul li a,
+    .large-menu ul li a:link{
+        color: #555;
+        padding: 5px 15px;
     }
   }
