@@ -32,5 +32,16 @@ export class VolunteersComponent implements OnInit {
     this.fireService.GetVolunteers().subscribe(result => {
       this.volunteers = result;
     });
+    */
+
+    this.fireService.getUsers().subscribe(result => {
+      result.forEach(user => {
+        user.Role.forEach(r => {
+          if (r.toLowerCase() == "volunteer") {
+            this.volunteers.push(user);
+          }
+        });
+      });
+    });
   }
 }

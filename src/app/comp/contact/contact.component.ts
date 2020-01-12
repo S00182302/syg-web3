@@ -1,15 +1,8 @@
 import { Router } from "@angular/router";
 import { Volunteer } from "./../volunteers/volunteer";
 import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
 import { HttpService } from "../Shared/http.service";
-
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule
-} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-contact",
@@ -28,7 +21,7 @@ export class ContactComponent implements OnInit {
     this.locationChosen = true;
   }
 
-  constructor(public http: HttpService, private _router: Router) {}
+  constructor(public http: HttpService) {}
 
   myGroup = new FormGroup({
     nameFormControl: new FormControl("", [Validators.required]),
