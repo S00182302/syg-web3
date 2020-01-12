@@ -11,7 +11,7 @@ import { async } from "rxjs/internal/scheduler/async";
   templateUrl: "./join.component.html",
   styleUrls: ["./join.component.css"]
 })
-export class JoinComponent implements OnInit {
+export class JoinComponent implements OnInit { 
   newUserUID: string;
   constructor(
     private authService: AuthService,

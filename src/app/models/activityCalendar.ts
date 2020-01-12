@@ -5,4 +5,4 @@ export interface ActivityCalendar {
     MemberUIDs: string[];
     title?: string;
     end: Date;
-}
+} 

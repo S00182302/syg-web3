@@ -12,7 +12,7 @@ describe('JoinComponent', () => {
     })
     .compileComponents();
   }));
-
+ 
   beforeEach(() => {
     fixture = TestBed.createComponent(JoinComponent);
     component = fixture.componentInstance;

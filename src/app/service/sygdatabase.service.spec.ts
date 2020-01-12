@@ -9,4 +9,4 @@ describe('SYGDatabaseService', () => {
     const service: SYGDatabaseService = TestBed.get(SYGDatabaseService);
     expect(service).toBeTruthy();
   });
-});
+}); 

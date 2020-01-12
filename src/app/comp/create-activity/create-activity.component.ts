@@ -14,7 +14,7 @@ import { Router } from "@angular/router";
 })
 export class CreateActivityComponent implements OnInit {
   selectedFile: File;
-  filename: string;
+  filename: string; 
   activityItem: Activity;
 
   activityForm = new FormGroup({

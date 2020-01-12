@@ -15,6 +15,6 @@ export interface userModel {
   Hobbies: string;
   Mobile: string;
   Role: string[];
-  UserUID?: string;
+  UserUID?: string; 
   WeekdaysAttending?: boolean[];
 }

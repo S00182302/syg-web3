@@ -16,7 +16,7 @@ describe('CreateActivityComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateActivityComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); 
   });
 
   it('should create', () => {

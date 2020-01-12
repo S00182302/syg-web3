@@ -181,7 +181,7 @@ export class SYGDatabaseService {
     return this.firestore
       .collection("Users")
       .snapshotChanges()
-      .pipe(
+      .pipe( 
         map(changes => {
           return changes.map(a => {
             const data = a.payload.doc.data() as userModel;

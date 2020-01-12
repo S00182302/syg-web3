@@ -34,7 +34,7 @@ export class VolunteersComponent implements OnInit {
     this.fireService.GetVolunteers().subscribe(result => {
       this.volunteers = result;
     });
-    */
+    */ 
 
     this.fireService.getUsers().subscribe(result =>
       {

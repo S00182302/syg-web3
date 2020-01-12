@@ -11,7 +11,7 @@ describe('ActivityComponent', () => {
       declarations: [ ActivityComponent ]
     })
     .compileComponents();
-  }));
+  })); 
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ActivityComponent);

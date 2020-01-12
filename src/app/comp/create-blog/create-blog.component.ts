@@ -16,7 +16,7 @@ export class CreateBlogComponent implements OnInit {
 
   createABlogForm = new FormGroup({
     title: new FormControl("", [Validators.required]),
-    imageURL: new FormControl("", [Validators.required]),
+    imageURL: new FormControl("", [Validators.required]), 
     content: new FormControl("", [Validators.required])
   });
 

@@ -24,7 +24,7 @@ export class ActivityComponent implements OnInit {
             if(r.toLowerCase() == "admin"){
               this.isAdmin = true;
             }
-          });
+          }); 
         }
       });
     });

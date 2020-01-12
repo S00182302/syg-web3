@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   userDetails: any;
   responseMessage: string = '';
   responseMessageType: string = '';
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = false; 
 
   constructor(private authService: AuthService, private router: Router) {
     this.isCollapsed = true;
