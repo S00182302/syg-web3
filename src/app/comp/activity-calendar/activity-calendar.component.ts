@@ -57,6 +57,7 @@ export class ActivityCalendarComponent implements OnInit {
     this.svc
       .getActivityCalendarData()
       .subscribe(data => (this.calendarEvents = data));
+
     this.svc.getUsers().subscribe(data => {
       data.forEach(element => {
         if (element.UserUID == this.authsv.user.uid) {
@@ -68,7 +69,7 @@ export class ActivityCalendarComponent implements OnInit {
     this.svc.getUsers().subscribe(data => {
       data.forEach(element => {
         for (let i = 0; i < element.Role.length; i++) {
-          if (element.Role[i] == "Volunteer") {
+          if (element.Role[i].toLowerCase() == "volunteer") {
             this.users.push(element);
           }
         }
@@ -95,7 +96,6 @@ export class ActivityCalendarComponent implements OnInit {
   }
 
   eventClick(model, content) {
-    console.log(model);
     this.modalTitle = "Date: ";
     this.modalDate = this.getDateOnlyString(model.event.start);
     this.btnText = "Close";
@@ -110,39 +110,34 @@ export class ActivityCalendarComponent implements OnInit {
     }
 
     this.ActivityList = new Array<string>();
-    for (let j = 0; j < this.currentUser.Activities.length; j++) {
-      if (this.currentUser.Activities[j].Selected) {
-        let alreadyOnList = false;
-        for (let k = 0; k < this.ActivityList.length; k++) {
-          if (this.currentUser.Activities[j].Name == this.ActivityList[k]) {
-            alreadyOnList = true;
+    this.VolunteerList = new Array<string>();
+    for (let i = 0; i < this.users.length; i++) {
+      for (let j = 0; j < model.event.extendedProps.VolunteerUIDs.length; j++) {
+        if(this.users[i].UserUID != null){
+          if(model.event.extendedProps.VolunteerUIDs[j] == this.users[i].UserUID){
+            
+            this.users[i].Activities.forEach(act => {
+              let alreadyOnList = false;
+              for (let k = 0; k < this.ActivityList.length; k++) {
+                if (act.Name == this.ActivityList[k]) {
+                  alreadyOnList = true;
+                }
+              }
+              if (!alreadyOnList) {
+                this.ActivityList.push(act.Name);
+              }
+            });
           }
-        }
-        if (!alreadyOnList) {
-          this.ActivityList.push(this.currentUser.Activities[j].Name);
         }
       }
     }
 
     this.VolunteerList = new Array<string>();
-    for (let j = 0; j < this.users.length; j++) {
-      for (let k = 0; k < model.event.extendedProps.VolunteerUIDs.length; k++) {
-        let alreadyOnList = false;
-        for (let x = 0; x < this.ActivityList.length; x++) {
-          if (
-            this.VolunteerList[x] ==
-            this.users[j].FirstName + " " + this.users[j].LastName
-          ) {
-            alreadyOnList = true;
-          }
-        }
-        if (!alreadyOnList) {
-          if (
-            this.users[j].UserUID == model.event.extendedProps.VolunteerUIDs[k]
-          ) {
-            this.VolunteerList.push(
-              this.users[j].FirstName + " " + this.users[j].LastName
-            );
+    for (let i = 0; i < this.users.length; i++) {
+      for (let j = 0; j < model.event.extendedProps.VolunteerUIDs.length; j++) {
+        if(this.users[i].UserUID != null){
+          if(model.event.extendedProps.VolunteerUIDs[j] == this.users[i].UserUID){
+            this.VolunteerList.push(this.users[i].FirstName + " " + this.users[i].LastName);
           }
         }
       }
@@ -159,27 +154,35 @@ export class ActivityCalendarComponent implements OnInit {
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         result => {
+
+          let volunteerArray = model.event.extendedProps.VolunteerUIDs;
+          
           switch(result){
             case "remove":
+              if(this.alreadyVolunteered){
+                volunteerArray.splice(volunteerArray.indexOf(this.currentUser.UserUID), 1 );
+              }
               break;
             case "add":
               if(!this.alreadyVolunteered){
-                model.event.extendedProps.VolunteerUIDs.push(this.currentUser.UserUID);
+                volunteerArray.push(this.currentUser.UserUID);
               }
-              let actEvent: ActivityCalendar = {
-                id: model.id,
-                start: model.event.start,
-                end: model.event.end,
-                VolunteerUIDs: model.event.extendedProps.VolunteerUIDs,
-                MemberUIDs: model.event.extendedProps.MemberUIDs
-              };
-              this.svc.updateActivityEvent(actEvent);
               break;
             case "close":
               this.closeResult = `Closed with: ${result}`;
               this.isValidRole = false;
               break;
           }
+          let eDate = (model.event.end == null) ? model.event.start : model.event.end;
+          let actEvent: ActivityCalendar = {
+            id: model.event.id,
+            start: model.event.start,
+            end: eDate,
+            VolunteerUIDs: volunteerArray,
+            MemberUIDs: model.event.extendedProps.MemberUIDs
+          };
+          this.svc.updateActivityEvent(actEvent);
+
         },
         reason => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -195,16 +198,6 @@ export class ActivityCalendarComponent implements OnInit {
 
     let d = new Date(model.date).getDay();
     let isValidDay = d == 1 || d == 3 || d == 5 ? true : false;
-
-    // check if event exists for this date
-    this.calendarEvents.forEach(event => {
-      if (
-        this.getDateOnlyString(event.start) ==
-        this.getDateOnlyString(model.date)
-      ) {
-        isValidDay = false;
-      }
-    });
 
     for (let i = 0; i < this.currentUser.Role.length; i++) {
       if (
@@ -226,6 +219,15 @@ export class ActivityCalendarComponent implements OnInit {
           result => {
             switch(result){
               case "add":
+                let volunteers = new Array;
+                volunteers.push(this.currentUser.UserUID)
+                let actEvent: ActivityCalendar = {
+                  start: model.date,
+                  end: model.date,
+                  VolunteerUIDs: volunteers,
+                  MemberUIDs: new Array
+                };
+                this.svc.createNewActivityEvent(actEvent);
                 break;
               case "close":
                 this.closeResult = `Closed with: ${result}`;

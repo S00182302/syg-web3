@@ -167,7 +167,7 @@ export class SYGDatabaseService {
 
   updateActivityEvent(event: ActivityCalendar) {
     this.firestore
-      .collection("Activity")
+      .collection("ActivityCalendar")
       .doc(event.id)
       .update({
         start: event.start,
@@ -175,6 +175,10 @@ export class SYGDatabaseService {
         MemberUIDs: event.MemberUIDs,
         end: event.end
       });
+  }
+
+  createNewActivityEvent(activityEvent: ActivityCalendar): void {
+    this.firestore.collection("ActivityCalendar").add(activityEvent);
   }
 
   getUsers(): Observable<userModel[]> {
