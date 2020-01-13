@@ -11,23 +11,10 @@
 
 ### 🏠 [Homepage](https://github.com/S00182302/syg-web3/tree/DevBranch)
 
-## Install
+## Original repo
 
-```sh
-npm install
-```
+https://github.com/S00182302/syg-web3
 
-## Usage
-
-```sh
-npm run start
-```
-
-## Run tests
-
-```sh
-npm run test
-```
 
 ## Author
 
