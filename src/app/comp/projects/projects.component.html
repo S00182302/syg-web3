@@ -125,7 +125,7 @@
             <div class="modal-footer">
                 <button *ngIf="isEventOwner" type="button" class="btn btn-outline-dark" (click)="modal.close('Delete click')">Delete</button>
                 <button *ngIf="hasPermission" type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-                <button *ngIf="!hasPermission" type="button" class="btn btn-outline-dark" (click)="modal.close('close click')">Save</button>
+                <button *ngIf="!hasPermission" type="button" class="btn btn-outline-dark" (click)="modal.close('close click')">Close</button>
             </div>
         </ng-template>
           
