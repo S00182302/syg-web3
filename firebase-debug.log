@@ -1,0 +1,25 @@
+[debug] [2020-01-13T01:53:20.224Z] ----------------------------------------------------------------------
+[debug] [2020-01-13T01:53:20.225Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Mark Walsh\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-01-13T01:53:20.225Z] CLI Version:   7.11.0
+[debug] [2020-01-13T01:53:20.225Z] Platform:      win32
+[debug] [2020-01-13T01:53:20.225Z] Node Version:  v10.15.3
+[debug] [2020-01-13T01:53:20.226Z] Time:          Mon Jan 13 2020 01:53:20 GMT+0000 (Greenwich Mean Time)
+[debug] [2020-01-13T01:53:20.226Z] ----------------------------------------------------------------------
+[debug] [2020-01-13T01:53:20.228Z] 
+[debug] [2020-01-13T01:53:20.236Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-13T01:53:20.236Z] > authorizing via signed-in user
+[debug] [2020-01-13T01:53:20.238Z] [iam] checking project svg-web3 for permissions ["firebase.projects.get"]
+[debug] [2020-01-13T01:53:20.239Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/svg-web3:testIamPermissions  
+
+[debug] [2020-01-13T01:53:21.014Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-13T01:53:21.016Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/svg-web3  
+ 
+[debug] [2020-01-13T01:53:21.309Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\Mark Walsh\Desktop\SYG\syg-web3'...
+[info] 
+[debug] [2020-01-13T01:53:21.312Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/svg-web3/webApps/-/config  
+ 
+[debug] [2020-01-13T01:53:21.981Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist/syg-web3
+[info] +  hosting: Local server: http://localhost:5000

@@ -1,15 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { OptionsInput } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import { SYGDatabaseService } from 'src/app/service/sygdatabase.service';
-import { ProjectCalendar } from 'src/app/models/projectCalendar';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import { NgbModal, ModalDismissReasons, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { userModel } from '../../models/userModel';
-import { AuthService } from '../../service/auth.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { OptionsInput } from "@fullcalendar/core";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { SYGDatabaseService } from "src/app/service/sygdatabase.service";
+import { ProjectCalendar } from "src/app/models/projectCalendar";
+import { FullCalendarComponent } from "@fullcalendar/angular";
+import {
+  NgbModal,
+  ModalDismissReasons,
+  NgbTimeStruct
+} from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { userModel } from "../../models/userModel";
+import { AuthService } from "../../service/auth.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-projects",
@@ -19,7 +23,6 @@ import { Observable } from 'rxjs';
 export class ProjectsComponent implements OnInit {
   calendarPlugins = [dayGridPlugin];
   calendarEvents: ProjectCalendar[];
-
   // for modal
   closeResult: string;
   modalTitle: string;
@@ -41,7 +44,7 @@ export class ProjectsComponent implements OnInit {
 
   allUsers: Observable<userModel[]>;
 
-  volunteers: userModel[] = new Array;
+  volunteers: userModel[] = new Array();
 
   hasPermission: boolean = false;
   currentUser: userModel;
@@ -55,8 +58,11 @@ export class ProjectsComponent implements OnInit {
 
   isEventOwner: boolean = false;
 
-  constructor(private svc: SYGDatabaseService, private modalService: NgbModal,private auth: AuthService) {
-  }
+  constructor(
+    private svc: SYGDatabaseService,
+    private modalService: NgbModal,
+    private auth: AuthService
+  ) {}
 
   options: OptionsInput;
   eventsModel: any;
@@ -64,26 +70,24 @@ export class ProjectsComponent implements OnInit {
   fullcalendar: FullCalendarComponent;
 
   ngOnInit() {
-    this.svc.getProjectData().subscribe(data => this.calendarEvents = data);
-    this.svc.getUsers().subscribe(result =>
-      {
-        result.forEach(user => {
-          user.Role.forEach(r => {
-            if(r.toLowerCase() == "volunteer"){
-              this.volunteers.push(user);
-            }
-          });
+    this.svc.getProjectData().subscribe(data => (this.calendarEvents = data));
+    this.svc.getUsers().subscribe(result => {
+      result.forEach(user => {
+        user.Role.forEach(r => {
+          if (r.toLowerCase() == "volunteer") {
+            this.volunteers.push(user);
+          }
         });
       });
+    });
 
-      this.svc.getUsers().subscribe(data => 
-        {
-          data.forEach(element => {
-            if(element.UserUID == this.auth.user.uid){
-              this.currentUser = element;
-            }
-          });
+    this.svc.getUsers().subscribe(data => {
+      data.forEach(element => {
+        if (element.UserUID == this.auth.user.uid) {
+          this.currentUser = element;
+        }
       });
+    });
 
     this.allUsers = this.svc.getUsers();
 
@@ -106,14 +110,14 @@ export class ProjectsComponent implements OnInit {
     };
   }
 
-
-
-
   eventClick(model, content) {
     //console.log(model);
     // check if event owner
     this.isEventOwner = false;
-    if(this.currentUser.id === model.event.extendedProps.extendendProps.leadVolunteer){
+    if (
+      this.currentUser.id ===
+      model.event.extendedProps.extendendProps.leadVolunteer
+    ) {
       this.isEventOwner = true;
     }
 
@@ -122,99 +126,117 @@ export class ProjectsComponent implements OnInit {
     this.modalDate = this.getDateOnlyString(model.event.start);
     // populate fields from model
     /* form controls */
-      this.fullDay = model.event.allDay;
-      this.allDayEvent.setValue(model.event.allDay);
-      // check if multi day
-      let startPlus24 = model.event.start.getTime() + (1 * 24 * 60 * 60 * 1000);
-      let endTimeModel: Date = model.event.end;
-      if(endTimeModel != null){
-        if(endTimeModel.getTime() > startPlus24){
-            this.multiDay = true;
-        }
-        this.endDate.setValue({
-          year: parseInt(endTimeModel.getUTCFullYear()+"", 10),
-          month: parseInt((endTimeModel.getMonth()+1)+"", 10),
-          day: parseInt(endTimeModel.getDate()+"", 10)
-        });
+    this.fullDay = model.event.allDay;
+    this.allDayEvent.setValue(model.event.allDay);
+    // check if multi day
+    let startPlus24 = model.event.start.getTime() + 1 * 24 * 60 * 60 * 1000;
+    let endTimeModel: Date = model.event.end;
+    if (endTimeModel != null) {
+      if (endTimeModel.getTime() > startPlus24) {
+        this.multiDay = true;
       }
-      this.multiDayEvent.setValue(this.multiDay);
-      if(model.event.start != null){
-        this.startTime.setValue({
-          hour: model.event.start.getHours(), 
-          minute: model.event.start.getMinutes()
-        });
-      }
-      if(model.event.end != null){
-        this.endTime.setValue({
-          hour: model.event.end.getHours(), 
-          minute: model.event.end.getMinutes()
-        });
-      }else if(model.event.start != null){
-        this.endTime.setValue({
-          hour: model.event.start.getHours(), 
-          minute: model.event.start.getMinutes()
-        });
-      }
-
-      this.hasPermission = false;
-      this.currentUser.Role.forEach(r => {
-        switch(r.toLowerCase()){
-          case "admin":
-            this.hasPermission = true;
-            break;
-          case "volunteer":
-            this.hasPermission = true;
-            break;
-          default:
-            this.modalTitle = "Event Details";
-            break;
-        }
+      this.endDate.setValue({
+        year: parseInt(endTimeModel.getUTCFullYear() + "", 10),
+        month: parseInt(endTimeModel.getMonth() + 1 + "", 10),
+        day: parseInt(endTimeModel.getDate() + "", 10)
       });
-
-      // if a member
-      this.mTitle = model.event.title;
-      this.mDescription = model.event.extendedProps.description;
-      this.allUsers.forEach(uArray => {
-        uArray.forEach(u => {
-          if(u.UserUID != null){
-            if(u.UserUID === model.event.extendedProps.extendendProps.leadVolunteer){
-              this.mProLeader = u.FirstName + " " + u.LastName;
-            }
-          }
-        });
+    }
+    this.multiDayEvent.setValue(this.multiDay);
+    if (model.event.start != null) {
+      this.startTime.setValue({
+        hour: model.event.start.getHours(),
+        minute: model.event.start.getMinutes()
       });
-      let sTH = (model.event.start.getHours() < 2) ? "0" + model.event.start.getHours() : model.event.start.getHours().toString();
-      let sTM = (model.event.start.getMinutes() < 2) ? "0" + model.event.start.getMinutes() : model.event.start.getMinutes().toString();
-      let eTH = (model.event.end.getHours() < 2) ? "0" + model.event.end.getHours() : model.event.end.getHours().toString();
-      let eTM = (model.event.end.getMinutes() < 2) ? "0" + model.event.end.getMinutes() : model.event.end.getMinutes().toString();
+    }
+    if (model.event.end != null) {
+      this.endTime.setValue({
+        hour: model.event.end.getHours(),
+        minute: model.event.end.getMinutes()
+      });
+    } else if (model.event.start != null) {
+      this.endTime.setValue({
+        hour: model.event.start.getHours(),
+        minute: model.event.start.getMinutes()
+      });
+    }
 
-      this.mStartDate = this.getDateOnlyString(model.event.start);
-      this.mStartTime = sTH +":"+ sTM
-      this.mEndDate = this.getDateOnlyString(model.event.end);
-      this.mEndTime = eTH +":"+ eTM
-
-
-      this.title.setValue(model.event.title);
-      let volunteerID = model.event.extendedProps.extendendProps.leadVolunteer;
-      this.volunteer.setValue(volunteerID, {onlySelf: true});
-      this.description.setValue(model.event.extendedProps.description);
-
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      switch(result){
-        case "Delete click":
-          this.deleteEvent(model.event.id);
+    this.hasPermission = false;
+    this.currentUser.Role.forEach(r => {
+      switch (r.toLowerCase()) {
+        case "admin":
+          this.hasPermission = true;
           break;
-        case "Save click":
-          this.UpdateProjectEvent(model);
+        case "volunteer":
+          this.hasPermission = true;
           break;
         default:
+          this.modalTitle = "Event Details";
           break;
       }
-    }, (reason) => {
-      this.resetFormData();
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
+    // if a member
+    this.mTitle = model.event.title;
+    this.mDescription = model.event.extendedProps.description;
+    this.allUsers.forEach(uArray => {
+      uArray.forEach(u => {
+        if (u.UserUID != null) {
+          if (
+            u.UserUID === model.event.extendedProps.extendendProps.leadVolunteer
+          ) {
+            this.mProLeader = u.FirstName + " " + u.LastName;
+          }
+        }
+      });
+    });
+    let sTH =
+      model.event.start.getHours() < 2
+        ? "0" + model.event.start.getHours()
+        : model.event.start.getHours().toString();
+    let sTM =
+      model.event.start.getMinutes() < 2
+        ? "0" + model.event.start.getMinutes()
+        : model.event.start.getMinutes().toString();
+    let eTH =
+      model.event.end.getHours() < 2
+        ? "0" + model.event.end.getHours()
+        : model.event.end.getHours().toString();
+    let eTM =
+      model.event.end.getMinutes() < 2
+        ? "0" + model.event.end.getMinutes()
+        : model.event.end.getMinutes().toString();
+
+    this.mStartDate = this.getDateOnlyString(model.event.start);
+    this.mStartTime = sTH + ":" + sTM;
+    this.mEndDate = this.getDateOnlyString(model.event.end);
+    this.mEndTime = eTH + ":" + eTM;
+
+    this.title.setValue(model.event.title);
+    let volunteerID = model.event.extendedProps.extendendProps.leadVolunteer;
+    this.volunteer.setValue(volunteerID, { onlySelf: true });
+    this.description.setValue(model.event.extendedProps.description);
+
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        result => {
+          this.closeResult = `Closed with: ${result}`;
+          switch (result) {
+            case "Delete click":
+              this.deleteEvent(model.event.id);
+              break;
+            case "Save click":
+              this.UpdateProjectEvent(model);
+              break;
+            default:
+              break;
+          }
+        },
+        reason => {
+          this.resetFormData();
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   eventDragStop(model) {
@@ -223,59 +245,59 @@ export class ProjectsComponent implements OnInit {
 
   eventDrop(model) {
     this.hasPermission = false;
-      this.currentUser.Role.forEach(r => {
-        switch(r.toLowerCase()){
-          case "admin":
-            this.hasPermission = true;
-            break;
-          case "volunteer":
-            this.hasPermission = true;
-            break;
-          default:
-            this.modalTitle = "Event Details";
-            break;
-        }
-      });
-
-      if(this.hasPermission){
-        let newCalendarEvent: ProjectCalendar;
-        let start = model.event.start;
-        let end = (model.event.end == null) ? model.event.start : model.event.end;
-    
-        newCalendarEvent = {
-          id: model.event.id,
-          start: start,
-          end: end,
-          title: model.event.title,
-          description: model.event.extendedProps.description,
-          extendendProps: {
-            leadVolunteer: model.event.extendedProps.extendendProps.leadVolunteer, 
-            specialNotes: model.event.extendedProps.extendendProps.specialNotes
-          },
-          allDay: model.event.allDay
-        };
-    
-        this.svc.updateProjectEvent(newCalendarEvent);
-        this.resetFormData();
+    this.currentUser.Role.forEach(r => {
+      switch (r.toLowerCase()) {
+        case "admin":
+          this.hasPermission = true;
+          break;
+        case "volunteer":
+          this.hasPermission = true;
+          break;
+        default:
+          this.modalTitle = "Event Details";
+          break;
       }
+    });
+
+    if (this.hasPermission) {
+      let newCalendarEvent: ProjectCalendar;
+      let start = model.event.start;
+      let end = model.event.end == null ? model.event.start : model.event.end;
+
+      newCalendarEvent = {
+        id: model.event.id,
+        start: start,
+        end: end,
+        title: model.event.title,
+        description: model.event.extendedProps.description,
+        extendendProps: {
+          leadVolunteer: model.event.extendedProps.extendendProps.leadVolunteer,
+          specialNotes: model.event.extendedProps.extendendProps.specialNotes
+        },
+        allDay: model.event.allDay
+      };
+
+      this.svc.updateProjectEvent(newCalendarEvent);
+      this.resetFormData();
+    }
   }
 
   dateClick(model, content) {
     this.hasPermission = false;
-      this.currentUser.Role.forEach(r => {
-        switch(r.toLowerCase()){
-          case "admin":
-            this.hasPermission = true;
-            break;
-          case "volunteer":
-            this.hasPermission = true;
-            break;
-          default:
-            this.modalTitle = "Event Details";
-            break;
-        }
-      });
-      
+    this.currentUser.Role.forEach(r => {
+      switch (r.toLowerCase()) {
+        case "admin":
+          this.hasPermission = true;
+          break;
+        case "volunteer":
+          this.hasPermission = true;
+          break;
+        default:
+          this.modalTitle = "Event Details";
+          break;
+      }
+    });
+
     this.modalTitle = "Add Event";
     this.modalDate = model.dateStr;
 
@@ -453,7 +475,7 @@ export class ProjectsComponent implements OnInit {
       eHour = this.endTime.value.hour;
       eMin = this.endTime.value.minute;
     }
-    
+
     let newCalendarEvent: ProjectCalendar;
     let start;
     let end;
@@ -473,7 +495,7 @@ export class ProjectsComponent implements OnInit {
       title: this.title.value,
       description: this.description.value,
       extendendProps: {
-        leadVolunteer: this.volunteer.value, 
+        leadVolunteer: this.volunteer.value,
         specialNotes: "Not enabled yet..."
       },
       allDay: this.allDayEvent.value
@@ -483,14 +505,12 @@ export class ProjectsComponent implements OnInit {
     this.resetFormData();
   }
 
-
-  deleteEvent(id: string){
+  deleteEvent(id: string) {
     this.svc.deleteProject(id);
     this.resetFormData();
   }
 
-  resetFormData(){
-    
+  resetFormData() {
     this.form1.reset();
     this.multiDay = false;
     this.fullDay = false;
